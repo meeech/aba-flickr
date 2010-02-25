@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+    <head>
+        <title></title>
+        <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+    </head>
+    <body>
+<style type="text/css" media="screen">
+div#shell {
+    border: 1px solid red;
+    height: 100%;
+    width: 100%;
+}
+</style>
+<div id="shell">
+    <div id="montreal"></div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+var i = 0;
+var jsonFlickrFeed = function (data) {
+    // @bug? Pass in array of urls, seems to trigger +1 - empty call
+    if( Y.Lang.isUndefined(data)) { return false; }
+    var items = data.items;
+    
+    return true;
+};
+
+var defaultArgs = ['id=35130544@N02','lang=en-us','format=json'];
+var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?'
+    + defaultArgs.join('&');
+
+var Y = YUI();
+var objTransaction = Y.Get.script([
+        baseFlickrUrl + "&tags=montreal",
+        baseFlickrUrl + "&tags=fireworks"
+    ], 
+    {
+        onSuccess: jsonFlickrFeed
+    });
+// 
+// $.getJSON(url, 
+//     jsonFlickrFeed);
+
+</script>
+
+    </body>
+</html>
