@@ -14,12 +14,26 @@
         div#shell div {
             border: 1px solid grey;
             display: inline-block;
+            vertical-align: top;
         }
+        
+        /*gallery title*/
+        div#shell div h2{
+            background-color: white;
+            border: 1px solid yellow;
+            position: absolute;
+        }
+        
+        /*Picture Title*/
         div#shell div span {
             border: 1px solid blue;
             display: block;
             text-align: center;
         }
+        div#shell div.index span {
+        }
+        
+        div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
         .hide {
             visibility: hidden !important;
             display: none !important;
@@ -40,7 +54,7 @@ var flickrUserName = 'amisoll';
 // Used for fetching the feed
 var flickrUserId = '35130544@N02'; 
 
-YUI().use('node', 'substitute', 'dump', function(Y) {
+YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) {
 
 jsonFlickrFeed = function (data) {
 
@@ -54,6 +68,7 @@ jsonFlickrFeed = function (data) {
     var randomIndex = Math.floor(Math.random()*items.length); //Can this be a bug? ever be == length?
 
     // @note: can improve performance by caching results, only appending hidden images on need.
+    container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
     Y.each(items, function(item, index) {
         item['thumb_src'] = item.media.m; //fix the src
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
@@ -71,12 +86,17 @@ jsonFlickrFeed = function (data) {
     return true;
 };
 
+Y.delegate('click', function(e) {
+    e.halt();
+    this.ancestor().ancestor().get('children').removeClass('hide');
+}, 'div#shell', 'div.index a');
+
 var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
-    
+
 var objTransaction = Y.Get.script([
-        baseFlickrUrl + "&tags=montreal"
-        // baseFlickrUrl + "&tags=fireworks"
+        baseFlickrUrl + "&tags=montreal",
+        baseFlickrUrl + "&tags=fireworks"
 ]);
 
 });//end closure
