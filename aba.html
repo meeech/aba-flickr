@@ -45,14 +45,14 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
 //Init so it has global scope
 var jsonFlickrFeed;
 
+YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) {
+//BEGIN Y closure
+
 //Used for filtering to get the tag name
 var flickrUserName = 'amisoll'; 
-
 // Used for fetching the feed
 var flickrUserId = '35130544@N02'; 
 
-YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) {
-//BEGIN Y closure
 jsonFlickrFeed = function (data) {
 
     if( Y.Lang.isUndefined(data.items)) { return false; }
