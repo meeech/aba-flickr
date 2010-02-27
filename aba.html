@@ -2,43 +2,42 @@
 <html>
     <head>
         <title></title>
-        <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+<style type="text/css" media="screen">
+div#shell {
+    border: 1px solid red;
+    height: 100%;
+    width: 100%;
+}
 
-        <style type="text/css" media="screen">
-        div#shell {
-            border: 1px solid red;
-            height: 100%;
-            width: 100%;
-        }
+div#shell div {
+    border: 1px solid grey;
+    display: inline-block;
+    vertical-align: top;
+}
 
-        div#shell div {
-            border: 1px solid grey;
-            display: inline-block;
-            vertical-align: top;
-        }
-        
-        /*gallery title*/
-        div#shell div h2{
-            background-color: white;
-            border: 1px solid yellow;
-            position: absolute;
-        }
-        
-        /*Picture Title*/
-        div#shell div span {
-            border: 1px solid blue;
-            display: block;
-            text-align: center;
-        }
-        div#shell div.index span {
-        }
-        
-        div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
-        .hide {
-            visibility: hidden !important;
-            display: none !important;
-        }
-        </style>
+/*gallery title*/
+div#shell div h2{
+    background-color: white;
+    border: 1px solid yellow;
+    position: absolute;
+}
+
+/*Picture Title*/
+div#shell div span {
+    border: 1px solid blue;
+    display: block;
+    text-align: center;
+}
+div#shell div.index span {
+}
+
+div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
+.hide {
+    visibility: hidden !important;
+    display: none !important;
+}
+</style>
     </head>
     <body>
 <div id="shell">
@@ -79,10 +78,6 @@ jsonFlickrFeed = function (data) {
     });
 
     Y.one('#shell').append(container);
-
-    // @bug? the node that was returned, only has node on _node prop
-    // container.get('children').removeClass('hide');
-    // container._node.children().removeClass('hide');    
     return true;
 };
 
