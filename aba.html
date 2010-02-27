@@ -3,28 +3,30 @@
     <head>
         <title></title>
         <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-min.js"></script>
+
+        <style type="text/css" media="screen">
+        div#shell {
+            border: 1px solid red;
+            height: 100%;
+            width: 100%;
+        }
+
+        div#shell div {
+            border: 1px solid grey;
+            display: inline-block;
+        }
+        div#shell div span {
+            border: 1px solid blue;
+            display: block;
+            text-align: center;
+        }
+        .hide {
+            visibility: hidden !important;
+            display: none !important;
+        }
+        </style>
     </head>
     <body>
-<style type="text/css" media="screen">
-div#shell {
-    border: 1px solid red;
-    height: 100%;
-    width: 100%;
-}
-
-div#shell div {
-    border: 1px solid grey;
-    display: inline-block;
-}
-div#shell div span {
-    border: 1px solid blue;
-    display: block;
-    text-align: center;
-}
-.hide {
-    display: none !important;
-}
-</style>
 <div id="shell">
 </div>
 
@@ -32,14 +34,26 @@ div#shell div span {
 //Init so it has global scope
 var jsonFlickrFeed;
 
+//Used for filtering to get the tag name
+var flickrUserName = 'amisoll'; 
+
+// Used for fetching the feed
+var flickrUserId = '35130544@N02'; 
+
 YUI().use('node', 'substitute', 'dump', function(Y) {
 
 jsonFlickrFeed = function (data) {
+
     if( Y.Lang.isUndefined(data.items)) { return false; }
     var items = data.items;
 
-    var container = Y.Node.create('<div id="montreal"></div>');
+    //We can filter based on usename plain english...
+    var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged', '');
+    var container = Y.Node.create('<div id="' + tagName + '"></div>');
+
     var randomIndex = Math.floor(Math.random()*items.length); //Can this be a bug? ever be == length?
+
+    // @note: can improve performance by caching results, only appending hidden images on need.
     Y.each(items, function(item, index) {
         item['thumb_src'] = item.media.m; //fix the src
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
@@ -57,7 +71,7 @@ jsonFlickrFeed = function (data) {
     return true;
 };
 
-var defaultArgs = ['id=35130544@N02','lang=en-us','format=json'];
+var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
     
 var objTransaction = Y.Get.script([
