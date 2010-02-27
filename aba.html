@@ -16,6 +16,11 @@ div#shell div {
     border: 1px solid grey;
     display: inline-block;
 }
+div#shell div span {
+    border: 1px solid blue;
+    display: block;
+    text-align: center;
+}
 .hide {
     display: none !important;
 }
@@ -41,7 +46,7 @@ jsonFlickrFeed = function (data) {
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
         item['class'] = (index != randomIndex) ? "hide" : "show" ;
         var nodehtml = Y.substitute(
-            "<div class={class}><a href='{image_src}'><img src='{thumb_src}'></a><br>{title}</div>", item);
+            "<div class={class}><a href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>", item);
         container.append(Y.Node.create(nodehtml));
     });
     Y.one('#shell').append(container);
