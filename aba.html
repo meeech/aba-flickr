@@ -59,13 +59,14 @@ jsonFlickrFeed = function (data) {
     var items = data.items;
 
     //We can filter based on usename plain english...
-    var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged', '');
+    var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged ', '');
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
 
     var randomIndex = Math.floor(Math.random()*items.length); //Can this be a bug? ever be == length?
 
     // @note: can improve performance by caching results, only appending hidden images on need.
     container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
+
     Y.each(items, function(item, index) {
         item['thumb_src'] = item.media.m; //fix the src
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
@@ -79,6 +80,11 @@ jsonFlickrFeed = function (data) {
     return true;
 };
 
+Y.delegate( 'click', function(e) {
+    console.log(e);
+}, 'div#shell div',  'h2');
+
+//Unhide the stack
 Y.delegate('click', function(e) {
     e.halt();
     this.ancestor().removeClass('index');
