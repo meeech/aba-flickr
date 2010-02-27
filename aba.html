@@ -81,7 +81,9 @@ jsonFlickrFeed = function (data) {
 };
 
 Y.delegate('click', function(e) {
-    console.log(e);
+    var imagesNodes = this.ancestor().all('div');
+    imagesNodes.addClass('hide');
+    imagesNodes.item(0).replaceClass('hide','index');
 }, 'div#shell',  'h2');
 
 //Unhide the stack
@@ -95,8 +97,8 @@ var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
 
 var objTransaction = Y.Get.script([
-        baseFlickrUrl + "&tags=montreal",
-//        baseFlickrUrl + "&tags=fireworks"
+    baseFlickrUrl + "&tags=montreal",
+    baseFlickrUrl + "&tags=fireworks"
 ]);
 
 //end closure
