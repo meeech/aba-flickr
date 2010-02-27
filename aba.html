@@ -81,6 +81,7 @@ jsonFlickrFeed = function (data) {
 
 Y.delegate('click', function(e) {
     e.halt();
+    this.ancestor().removeClass('index');
     this.ancestor().ancestor().get('children').removeClass('hide');
 }, 'div#shell', 'div.index a');
 
