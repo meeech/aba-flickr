@@ -29,8 +29,6 @@ div#shell div span {
     display: block;
     text-align: center;
 }
-div#shell div.index span {
-}
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
 .hide {
@@ -54,7 +52,7 @@ var flickrUserName = 'amisoll';
 var flickrUserId = '35130544@N02'; 
 
 YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) {
-
+//BEGIN Y closure
 jsonFlickrFeed = function (data) {
 
     if( Y.Lang.isUndefined(data.items)) { return false; }
@@ -91,10 +89,11 @@ var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + 
 
 var objTransaction = Y.Get.script([
         baseFlickrUrl + "&tags=montreal",
-        baseFlickrUrl + "&tags=fireworks"
+//        baseFlickrUrl + "&tags=fireworks"
 ]);
 
-});//end closure
+//end closure
+});
 </script>
 
     </body>
