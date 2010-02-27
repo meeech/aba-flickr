@@ -13,34 +13,42 @@ div#shell {
 }
 </style>
 <div id="shell">
-    <div id="montreal"></div>
+    <div id="foo">
+        
+    </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
-var jsonFlickrFeed = function (data) {
-    // @bug? Pass in array of urls, seems to trigger +1 - empty call
+//Init so it has global scope
+var jsonFlickrFeed;
+
+YUI().use('node', 'substitute', 'dump', function(Y) {
+
+jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }
     var items = data.items;
-    console.log(items);
+
+    var container = Y.Node.create('<div id="montreal"></div>');
+    console.log(container);
+    Y.each(items, function(item) {
+        //fix the src
+        item['thumb_src'] = item.media.m;
+        var nodehtml = Y.substitute("<a href='{url}'><img src='{thumb_src}'></a><br>{title}<br>", item);
+        container.append(Y.Node.create(nodehtml));
+    });
+    Y.one('#shell').append(container);
     return true;
 };
 
 var defaultArgs = ['id=35130544@N02','lang=en-us','format=json'];
-var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?'
-    + defaultArgs.join('&');
-
-var Y = YUI();
+var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
+    
 var objTransaction = Y.Get.script([
-        baseFlickrUrl + "&tags=montreal",
-        baseFlickrUrl + "&tags=fireworks"
-    ], 
-    {
-        onSuccess: jsonFlickrFeed
-    });
-// 
-// $.getJSON(url, 
-//     jsonFlickrFeed);
+        baseFlickrUrl + "&tags=montreal"
+        // baseFlickrUrl + "&tags=fireworks"
+]);
 
+});//end closure
 </script>
 
     </body>
