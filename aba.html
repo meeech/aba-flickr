@@ -41,15 +41,19 @@ jsonFlickrFeed = function (data) {
     var container = Y.Node.create('<div id="montreal"></div>');
     var randomIndex = Math.floor(Math.random()*items.length); //Can this be a bug? ever be == length?
     Y.each(items, function(item, index) {
-        console.log(item);
         item['thumb_src'] = item.media.m; //fix the src
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
-        item['class'] = (index != randomIndex) ? "hide" : "show" ;
+        item['class'] = (index != randomIndex) ? "hide" : "index" ;
         var nodehtml = Y.substitute(
             "<div class={class}><a href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>", item);
         container.append(Y.Node.create(nodehtml));
     });
+
     Y.one('#shell').append(container);
+
+    // @bug? the node that was returned, only has node on _node prop
+    // container.get('children').removeClass('hide');
+    // container._node.children().removeClass('hide');    
     return true;
 };
 
