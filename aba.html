@@ -35,9 +35,9 @@ div#shell div span {
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
 .hide {
-/*    visibility: hidden !important;
+    visibility: hidden !important;
     display: none !important;
-*/}
+}
 </style>
     <link rel="stylesheet" type="text/css" href="http://localhost/shadowbox-3.0.2/shadowbox.css">
     <script type="text/javascript" src="http://localhost/shadowbox-3.0.2/shadowbox.js"></script>
@@ -47,28 +47,27 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
     </div>
 
 <script type="text/javascript" charset="utf-8">
-//Init so it has global scope
+// Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
-
 // domready wrapped in use
 YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() {
-//BEGIN Y closure
+// BEGIN Y closure
 
-//Used for filtering to get the tag name
+// Used for filtering to get the tag name
 var flickrUserName = 'amisoll'; 
 // Used for fetching the feed
 var flickrUserId = '35130544@N02'; 
 Shadowbox.init({
     skipSetup: true
 });
-
-Shadowbox.open({
-       content:    '<div id="welcome-msg">Welcome to my website!</div>',
-       player:     "html",
-       title:      "Welcome",
-       height:     350,
-       width:      350
-   });
+// 
+// Shadowbox.open({
+//        content:    '<div id="welcome-msg">Welcome to my website!</div>',
+//        player:     "html",
+//        title:      "Welcome",
+//        height:     350,
+//        width:      350
+//    });
 
 jsonFlickrFeed = function (data) {
 
@@ -98,18 +97,21 @@ jsonFlickrFeed = function (data) {
     return true;
 };
 
-// Y.delegate('click', function(e) {
-//     var imagesNodes = this.ancestor().all('div');
-//     imagesNodes.addClass('hide');
-//     imagesNodes.item(0).replaceClass('hide','index');
-// }, 'div#shell',  'h2');
+//Show hide the gallery thumbs...
+Y.delegate('click', function(e) {
+    var imagesNodes = this.ancestor().all('div');
+    imagesNodes.addClass('hide');
+    imagesNodes.item(0).replaceClass('hide','index');
+}, 'div#shell',  'h2');
 
-//revmoe hide class from the stack
-// Y.delegate('click', function(e) {
-//     e.halt();
-//     this.ancestor().removeClass('index');
-//     this.ancestor().ancestor().get('children').removeClass('hide');
-// }, 'div#shell', 'div.index a');
+//show the stack when cover image is clicked. 
+//remove hide class from the stack,
+//Remove index class from picture
+Y.delegate('click', function(e) {
+    e.halt();
+    this.ancestor().removeClass('index');
+    this.ancestor().ancestor().get('children').removeClass('hide');
+}, 'div#shell', 'div.index a');
 
 var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
