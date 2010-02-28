@@ -52,11 +52,11 @@ var jsonFlickrFeed;
 // domready wrapped in use
 YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() {
 // BEGIN Y closure
-
 // Used for filtering to get the tag name
 var flickrUserName = 'amisoll'; 
 // Used for fetching the feed
 var flickrUserId = '35130544@N02'; 
+
 Shadowbox.init({
     skipSetup: true
 });
@@ -68,33 +68,41 @@ Shadowbox.init({
 //        height:     350,
 //        width:      350
 //    });
+//Our data dump. 
+var bb = Y.namespace(flickrUserName.concat('.data'));
 
 jsonFlickrFeed = function (data) {
-
     if( Y.Lang.isUndefined(data.items)) { return false; }
-    var items = data.items;
+    bb = data;    
+    Y.one('#shell').append(buildgallery(bb));
+    return true;
+};
 
+/**
+ * 
+ *
+ * @return Node (the container div)
+ */
+
+var buildgallery = function(data) {
+    var galleryItemTemplate = "<div class={class}><a rel='shadowbox' href='{image_src}'><img rel='shadowbox' src='{thumb_src}'></a><br><span>{title}</span></div>";
+    var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
+    
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged ', '');
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
 
-    var randomIndex = Math.floor(Math.random()*items.length); //Can this be a bug? ever be == length?
-
-    // @note: can improve performance by caching results, only appending hidden images on need.
     container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
-
-    Y.each(items, function(item, index) {
+    
+    Y.each(data.items, function(item, index) {
         item['thumb_src'] = item.media.m; //fix the src
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
         item['class'] = (index != randomIndex) ? "hide" : "index" ;
-        var nodehtml = Y.substitute(
-            "<div class={class}><a rel='shadowbox' href='{image_src}'><img rel='shadowbox' src='{thumb_src}'></a><br><span>{title}</span></div>", item);
+        var nodehtml = Y.substitute(galleryItemTemplate , item);
         container.append(Y.Node.create(nodehtml));
     });
-
-    Y.one('#shell').append(container);
     
-    return true;
+    return container;
 };
 
 //Show hide the gallery thumbs...
