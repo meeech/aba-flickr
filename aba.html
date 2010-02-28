@@ -12,10 +12,10 @@ div#shell {
 }
 
 /*image item*/
-div#shell div {
+div#shell div>div {
     border: 1px solid grey;
     display: inline-block;
-    position:absolute;
+/*    position:absolute;*/
     vertical-align: top;
 }
 
@@ -41,9 +41,9 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
 }
 </style>
     </head>
-    <body>
-<div id="shell">
-</div>
+<body>
+    <div id="shell">
+    </div>
 
 <script type="text/javascript" charset="utf-8">
 //Init so it has global scope
@@ -90,7 +90,7 @@ Y.delegate('click', function(e) {
     imagesNodes.item(0).replaceClass('hide','index');
 }, 'div#shell',  'h2');
 
-//Unhide the stack
+//revmoe hide class from the stack
 Y.delegate('click', function(e) {
     e.halt();
     this.ancestor().removeClass('index');
