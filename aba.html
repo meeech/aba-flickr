@@ -15,7 +15,6 @@ div#shell {
 div#shell div>div {
     border: 1px solid grey;
     display: inline-block;
-/*    position:absolute;*/
     vertical-align: top;
 }
 
@@ -36,10 +35,12 @@ div#shell div span {
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
 .hide {
-    visibility: hidden !important;
+/*    visibility: hidden !important;
     display: none !important;
-}
+*/}
 </style>
+    <link rel="stylesheet" type="text/css" href="http://localhost/shadowbox-3.0.2/shadowbox.css">
+    <script type="text/javascript" src="http://localhost/shadowbox-3.0.2/shadowbox.js"></script>
     </head>
 <body>
     <div id="shell">
@@ -49,13 +50,25 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
 //Init so it has global scope
 var jsonFlickrFeed;
 
-YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) {
+// domready wrapped in use
+YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() {
 //BEGIN Y closure
 
 //Used for filtering to get the tag name
 var flickrUserName = 'amisoll'; 
 // Used for fetching the feed
 var flickrUserId = '35130544@N02'; 
+Shadowbox.init({
+    skipSetup: true
+});
+
+Shadowbox.open({
+       content:    '<div id="welcome-msg">Welcome to my website!</div>',
+       player:     "html",
+       title:      "Welcome",
+       height:     350,
+       width:      350
+   });
 
 jsonFlickrFeed = function (data) {
 
@@ -76,43 +89,44 @@ jsonFlickrFeed = function (data) {
         item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
         item['class'] = (index != randomIndex) ? "hide" : "index" ;
         var nodehtml = Y.substitute(
-            "<div class={class}><a href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>", item);
+            "<div class={class}><a rel='shadowbox' href='{image_src}'><img rel='shadowbox' src='{thumb_src}'></a><br><span>{title}</span></div>", item);
         container.append(Y.Node.create(nodehtml));
     });
 
     Y.one('#shell').append(container);
+    
     return true;
 };
 
-Y.delegate('click', function(e) {
-    var imagesNodes = this.ancestor().all('div');
-    imagesNodes.addClass('hide');
-    imagesNodes.item(0).replaceClass('hide','index');
-}, 'div#shell',  'h2');
+// Y.delegate('click', function(e) {
+//     var imagesNodes = this.ancestor().all('div');
+//     imagesNodes.addClass('hide');
+//     imagesNodes.item(0).replaceClass('hide','index');
+// }, 'div#shell',  'h2');
 
 //revmoe hide class from the stack
-Y.delegate('click', function(e) {
-    e.halt();
-    this.ancestor().removeClass('index');
-    this.ancestor().ancestor().get('children').removeClass('hide');
-}, 'div#shell', 'div.index a');
+// Y.delegate('click', function(e) {
+//     e.halt();
+//     this.ancestor().removeClass('index');
+//     this.ancestor().ancestor().get('children').removeClass('hide');
+// }, 'div#shell', 'div.index a');
 
 var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
 
 var objTransaction = Y.Get.script([
-    baseFlickrUrl + "&tags=montreal",
-    baseFlickrUrl + "&tags=fireworks"
-]);
+    // 'http://localhost/shadowbox-build-3.0rc1/shadowbox.js',
+    baseFlickrUrl + "&tags=montreal"
+    // baseFlickrUrl + "&tags=fireworks"
+],  {
+    onEnd: function() {
+        console.log('ended');        
+    }
+});
 
 //end closure
-});
+});});
 </script>
 
 </body>
-<link rel="stylesheet" type="text/css" href="/shadowbox-build-3.0rc1/shadowbox.css">
-<script type="text/javascript" src="/shadowbox-build-3.0rc1/shadowbox.js"></script>
-<script type="text/javascript">
-Shadowbox.init();
-</script>
 </html>
