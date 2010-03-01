@@ -94,17 +94,18 @@ var initgallery = function(data) {
     
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
     container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
+
     //Store data under tag name Make index image
     bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
     bb[tagName]['images'] = data.items;
     bb[tagName]['container'] = container;
-    container.append(buildGalleryNode(bb[tagName]['indexImage']).addClass('index'));
+    container.append(buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index'));
     return container;
 };
 
 //Build all the gallery images. 
 var buildGallery = function(tag) {
-    var imagesDiv = Y.Node.create('<div class="gallery"></div>');
+    var imagesDiv = Y.Node.create('<div class="hide gallery"></div>');
     Y.each( bb[tag].images , function(item, index) {
          var node = buildGalleryNode(item);
          imagesDiv.append(node);
@@ -120,34 +121,32 @@ var buildGallery = function(tag) {
  * @options usual - class, id, whatnot. will add as necessary
  * @return Node
  */
-
 var buildGalleryNode = function(item, options) {
-    var htmlT = "<div class='{class}'><a href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>";
+    options = options || {};
+    var htmlT = "<div class='{class}'><a title='{title}' href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>";
     item['thumb_src'] = item.media.m; //fix the src
     item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
-    item['class'] = '';
+    item['class'] = options['class'] || '';
+    item['title'] = options['title'] || item['title'];
     return Y.Node.create(Y.substitute(htmlT , item));
 };
 
 //Show hide the gallery thumbs...
-Y.delegate('click', function(e) {
-    var tagName = this.get('innerHTML');
-    var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
-    bb[tagName]['container'].append(gallery);
-    // buildGallery(this.get('innerHTML'));    
-    // var imagesNodes = this.ancestor().all('div');
-    // imagesNodes.addClass('hide');
-    // imagesNodes.item(0).replaceClass('hide','index');
-}, 'div#shell',  'h2');
-
 //show the stack when cover image is clicked. 
 //remove hide class from the stack,
-//Remove index class from picture
+//hide index
 Y.delegate('click', function(e) {
     e.halt();
-    this.ancestor().removeClass('index');
-    this.ancestor().ancestor().get('children').removeClass('hide');
-}, 'div#shell', 'div.index a');
+    var tagName = this.get('title') || this.get('innerHTML');
+
+    var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
+    if(false == gallery.inDoc()) {
+        bb[tagName]['container'].append(gallery);        
+    }
+    gallery.toggleClass('hide');
+    
+}, 'div#shell',  'h2,div.index a');
+
 
 var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
