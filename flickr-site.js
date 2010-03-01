@@ -21,7 +21,8 @@ jsonFlickrFeed = function (data) {
  * @return Node (the container div)
  */
 var initgallery = function(data) {
-    var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
+    // var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
+    var randomIndex = 1;
     
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', '');
@@ -76,16 +77,30 @@ var buildGalleryNode = function(item, options) {
 //show the stack when cover image is clicked. 
 //remove hide class from the stack,
 //hide index
+
 Y.delegate('click', function(e) {
     e.halt();
     var tagName = this.get('title') || this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
+
     if(false == gallery.inDoc()) {
         // e.container.append(gallery);
         Y.one('#thumbs').append(gallery);
         // bb[tagName]['container'].append(gallery);        
     }
-    gallery.toggleClass('hide');
+
+    //Trying to hide any open galleries before showing new one. caling it a night
+    if(gallery.hasClass('hide')){
+        if(Y.one('#thumbs').one('div.showing')){
+            Y.one('#thumbs').one('div.showing').replaceClass('showing', 'hide');
+        }
+        gallery.replaceClass('hide', 'showing');
+       // gallery.toggleClass('hide');
+    } else {
+        gallery.toggleClass('hide');
+    }
+
+    // gallery.replaceClass('showing', 'hide');
     
 }, 'div#shell',  'h2,div.index a');
 

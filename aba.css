@@ -39,7 +39,11 @@ div#shell div span {
 div.index {
     height:100px;
     overflow: hidden;
-    width: 100px;
+    width: 133px;
+}
+div.index img {
+    left: -20px;
+    top: -20px;
 }
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
