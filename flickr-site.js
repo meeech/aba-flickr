@@ -60,7 +60,7 @@ var buildGallery = function(tag) {
  */
 var buildGalleryNode = function(item, options) {
     options = options || {};
-    var htmlT = "<div class='{class}'><a title='{title}' href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>";
+    var htmlT = "<div class='{class}'><a title='{title}' href='{image_src}'><img src='{thumb_src}'></a><span>{title}</span></div>";
     item['thumb_src'] = item.media.m; //fix the src
     item['image_src'] = item.media.m.replace('_m.jpg', '_b.jpg'); //fix the src
     item['class'] = options['class'] || '';

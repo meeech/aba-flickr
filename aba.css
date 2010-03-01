@@ -9,10 +9,7 @@ div#shell {
 div#shell div>div {
     border: 3px solid grey;
     display: inline-block;
-    height:100px;
-    overflow: hidden;
     vertical-align: top;
-    width: 100px;
 }
 
 /*gallery title*/
@@ -28,6 +25,12 @@ div#shell div span {
     border: 1px solid blue;
     display: block;
     text-align: center;
+}
+
+div.index {
+    height:100px;
+    overflow: hidden;
+    width: 100px;
 }
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
