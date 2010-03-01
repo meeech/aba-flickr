@@ -34,7 +34,7 @@ div#shell div span {
 }
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
-.hide {
+div.hide {
     visibility: hidden !important;
     display: none !important;
 }
@@ -97,6 +97,7 @@ var initgallery = function(data) {
 
     //Store data under tag name Make index image
     bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
+    bb[tagName]['indexImageNode'] = buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index');
     bb[tagName]['images'] = data.items;
     bb[tagName]['container'] = container;
     container.append(buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index'));
@@ -138,7 +139,6 @@ var buildGalleryNode = function(item, options) {
 Y.delegate('click', function(e) {
     e.halt();
     var tagName = this.get('title') || this.get('innerHTML');
-
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
     if(false == gallery.inDoc()) {
         bb[tagName]['container'].append(gallery);        
