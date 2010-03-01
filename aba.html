@@ -34,7 +34,7 @@ div#shell div span {
 }
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
-div.hide {
+.hide {
     visibility: hidden !important;
     display: none !important;
 }
@@ -60,14 +60,7 @@ var flickrUserId = '35130544@N02';
 Shadowbox.init({
     skipSetup: true
 });
-// 
-// Shadowbox.open({
-//        content:    '<div id="welcome-msg">Welcome to my website!</div>',
-//        player:     "html",
-//        title:      "Welcome",
-//        height:     350,
-//        width:      350
-//    });
+
 //Our data dump. 
 var bb = Y.namespace(flickrUserName.concat('.data'));
 
@@ -108,7 +101,7 @@ var initgallery = function(data) {
 var buildGallery = function(tag) {
     var imagesDiv = Y.Node.create('<div class="hide gallery"></div>');
     Y.each( bb[tag].images , function(item, index) {
-         var node = buildGalleryNode(item);
+         var node = buildGalleryNode(item, {'class' : 'shadowbox'} );
          imagesDiv.append(node);
     });
     
@@ -147,6 +140,17 @@ Y.delegate('click', function(e) {
     
 }, 'div#shell',  'h2,div.index a');
 
+/* Shadowbox image*/
+Y.delegate('click', function(e) {
+    e.halt();
+    console.log(this);
+    Shadowbox.open({
+       content:    this.href,
+       player:     "img",
+       title:      this.title || ''
+    });
+
+}, 'div#shell', 'div.shadowbox a');
 
 var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
