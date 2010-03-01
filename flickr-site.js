@@ -1,17 +1,12 @@
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
 // Used for filtering to get the tag name
-var flickrUserName = 'amisoll'; 
-// Used for fetching the feed
-var flickrUserId = '35130544@N02'; 
 
 // domready wrapped in use
 YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 
-
 //Our data dump. 
-var bb = Y.namespace(flickrUserName.concat('.data'));
-
+var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').append(initgallery(data));
@@ -29,7 +24,7 @@ var initgallery = function(data) {
     var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
     
     //We can filter based on usename plain english...
-    var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged ', '');
+    var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', '');
     bb[tagName] = {};
     bb[tagName]['gallery'] = false;
     
@@ -70,7 +65,7 @@ var buildGalleryNode = function(item, options) {
     item['image_src'] = item.media.m.replace('_m.jpg', '_b.jpg'); //fix the src
     item['class'] = options['class'] || '';
     item['title'] = options['title'] || item['title'];
-    console.log(item);
+
     return Y.Node.create(Y.substitute(htmlT , item));
 };
 
@@ -100,7 +95,7 @@ Y.delegate('click', function(e) {
 
 }, 'div#shell', 'div.shadowbox a');
 
-var defaultArgs = ['id='+flickrUserId,'lang=en-us','format=json'];
+var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
 
 var objTransaction = Y.Get.script([

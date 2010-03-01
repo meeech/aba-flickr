@@ -7,9 +7,12 @@ div#shell {
 
 /*image item*/
 div#shell div>div {
-    border: 1px solid grey;
+    border: 3px solid grey;
     display: inline-block;
+    height:100px;
+    overflow: hidden;
     vertical-align: top;
+    width: 100px;
 }
 
 /*gallery title*/
