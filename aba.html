@@ -90,6 +90,7 @@ var initgallery = function(data) {
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged ', '');
     bb[tagName] = {};
+    bb[tagName]['gallery'] = false;
     
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
     container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
@@ -102,11 +103,15 @@ var initgallery = function(data) {
 };
 
 //Build all the gallery images. 
-var buildGallery = function(items,container) {
-    // Y.each(data.items, function(item, index) {
-    //      var nodehtml = buildGalleryItem(item);
-    //      container.append(Y.Node.create(nodehtml));
-    // });
+var buildGallery = function(tag) {
+    var imagesDiv = Y.Node.create('<div class="gallery"></div>');
+    Y.each( bb[tag].images , function(item, index) {
+         var node = buildGalleryNode(item);
+         imagesDiv.append(node);
+    });
+    
+    bb[tag]['gallery'] = imagesDiv;    
+    return imagesDiv;
 };
 
 /**
@@ -126,9 +131,13 @@ var buildGalleryNode = function(item, options) {
 
 //Show hide the gallery thumbs...
 Y.delegate('click', function(e) {
-    var imagesNodes = this.ancestor().all('div');
-    imagesNodes.addClass('hide');
-    imagesNodes.item(0).replaceClass('hide','index');
+    var tagName = this.get('innerHTML');
+    var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
+    console.log(gallery);
+    // buildGallery(this.get('innerHTML'));    
+    // var imagesNodes = this.ancestor().all('div');
+    // imagesNodes.addClass('hide');
+    // imagesNodes.item(0).replaceClass('hide','index');
 }, 'div#shell',  'h2');
 
 //show the stack when cover image is clicked. 
