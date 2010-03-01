@@ -133,7 +133,7 @@ var buildGalleryNode = function(item, options) {
 Y.delegate('click', function(e) {
     var tagName = this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
-    console.log(gallery);
+    bb[tagName]['container'].append(gallery);
     // buildGallery(this.get('innerHTML'));    
     // var imagesNodes = this.ancestor().all('div');
     // imagesNodes.addClass('hide');
