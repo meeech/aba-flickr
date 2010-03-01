@@ -4,9 +4,9 @@ var jsonFlickrFeed;
 
 // domready wrapped in use
 YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() { // BEGIN Y closure
-
 //Our data dump. 
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
+
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').append(initgallery(data));
@@ -98,11 +98,12 @@ Y.delegate('click', function(e) {
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
 
-var objTransaction = Y.Get.script([
-    'http://localhost/shadowbox-3.0.2/shadowbox.js',
-    baseFlickrUrl + "&tags=montreal",
-    baseFlickrUrl + "&tags=fireworks"
-],  {
+var urls = ['http://localhost/shadowbox-3.0.2/shadowbox.js'];
+Y.each(abaConfig.tags, function(el) {
+    urls.push(baseFlickrUrl + "&tags="+el);
+});
+
+var objTransaction = Y.Get.script(urls, {
     onEnd: function() {
         Shadowbox.init({
             skipSetup: true
