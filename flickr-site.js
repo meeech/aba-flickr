@@ -9,7 +9,7 @@ var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
-    Y.one('#shell').append(initgallery(data));
+    Y.one('#shell').prepend(initgallery(data));
     return true;
 };
 
@@ -27,9 +27,12 @@ var initgallery = function(data) {
     var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', '');
     bb[tagName] = {};
     bb[tagName]['gallery'] = false;
-    
+
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
     container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
+
+    //The area where we show thumbnails.
+    Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));
 
     //Store data under tag name Make index image
     bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
@@ -78,7 +81,9 @@ Y.delegate('click', function(e) {
     var tagName = this.get('title') || this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
     if(false == gallery.inDoc()) {
-        bb[tagName]['container'].append(gallery);        
+        // e.container.append(gallery);
+        Y.one('#thumbs').append(gallery);
+        // bb[tagName]['container'].append(gallery);        
     }
     gallery.toggleClass('hide');
     

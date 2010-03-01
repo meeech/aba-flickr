@@ -5,6 +5,11 @@ div#shell {
     position:relative;
 }
 
+div#shell>div {
+    border: 3px solid cyan;
+    display:inline-block;
+}
+
 /*image item*/
 div#shell div>div {
     border: 3px solid grey;
@@ -12,6 +17,10 @@ div#shell div>div {
     vertical-align: top;
 }
 
+div#shell>div#thumbs {
+    display: block;
+    border: 1px solid orange;
+}
 /*gallery title*/
 div#shell div h2{
     background-color: white;
