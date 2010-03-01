@@ -28,6 +28,16 @@ div#shell div h2{
     position: absolute;
     z-index: 1;
 }
+/*gallery count*/
+div#shell div h3{
+    background-color: white;
+    position: relative;
+    padding-top:50px;
+    float:right;
+    margin: 0;
+    display: block;
+    z-index: 1;
+}
 
 /*Picture Title*/
 div#shell div span {

@@ -30,7 +30,9 @@ var initgallery = function(data) {
     bb[tagName]['gallery'] = false;
 
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
-    container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
+
+    container.append(Y.Node.create('<h2>' + tagName +'</h2>'));
+    container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));
 
     //The area where we show thumbnails.
     Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));
