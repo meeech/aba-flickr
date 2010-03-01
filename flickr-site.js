@@ -120,7 +120,7 @@ Y.delegate('click', function(e) {
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
 
-var urls = ['http://localhost/shadowbox-3.0.2/shadowbox.js'];
+var urls = ['/shadowbox-3.0.2/shadowbox.js'];
 Y.each(abaConfig.tags, function(el) {
     urls.push(baseFlickrUrl + "&tags="+el);
 });
