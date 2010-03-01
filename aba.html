@@ -72,37 +72,56 @@ Shadowbox.init({
 var bb = Y.namespace(flickrUserName.concat('.data'));
 
 jsonFlickrFeed = function (data) {
-    if( Y.Lang.isUndefined(data.items)) { return false; }
-    bb = data;    
-    Y.one('#shell').append(buildgallery(bb));
+    if( Y.Lang.isUndefined(data.items)) { return false; }  
+    Y.one('#shell').append(initgallery(data));
     return true;
 };
 
-/**
- * 
+/** 
+ * This builds initial gallery - the index basically
+ * also caches returned data into the bb.tagName
  *
+ * @param data full returned data from flickr
  * @return Node (the container div)
  */
-
-var buildgallery = function(data) {
-    var galleryItemTemplate = "<div class={class}><a rel='shadowbox' href='{image_src}'><img rel='shadowbox' src='{thumb_src}'></a><br><span>{title}</span></div>";
+var initgallery = function(data) {
     var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
     
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + flickrUserName + ', tagged ', '');
+    bb[tagName] = {};
+    
     var container = Y.Node.create('<div id="' + tagName + '"></div>');
-
     container.append(Y.Node.create('<h2>' + tagName + '</h2>'));
-    
-    Y.each(data.items, function(item, index) {
-        item['thumb_src'] = item.media.m; //fix the src
-        item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
-        item['class'] = (index != randomIndex) ? "hide" : "index" ;
-        var nodehtml = Y.substitute(galleryItemTemplate , item);
-        container.append(Y.Node.create(nodehtml));
-    });
-    
+    //Store data under tag name Make index image
+    bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
+    bb[tagName]['images'] = data.items;
+    bb[tagName]['container'] = container;
+    container.append(buildGalleryNode(bb[tagName]['indexImage']).addClass('index'));
     return container;
+};
+
+//Build all the gallery images. 
+var buildGallery = function(items,container) {
+    // Y.each(data.items, function(item, index) {
+    //      var nodehtml = buildGalleryItem(item);
+    //      container.append(Y.Node.create(nodehtml));
+    // });
+};
+
+/**
+ * 
+ * @param item obj image data
+ * @options usual - class, id, whatnot. will add as necessary
+ * @return Node
+ */
+
+var buildGalleryNode = function(item, options) {
+    var htmlT = "<div class='{class}'><a href='{image_src}'><img src='{thumb_src}'></a><br><span>{title}</span></div>";
+    item['thumb_src'] = item.media.m; //fix the src
+    item['image_src'] = item.media.m.replace('_m.jpg', '.jpg'); //fix the src
+    item['class'] = '';
+    return Y.Node.create(Y.substitute(htmlT , item));
 };
 
 //Show hide the gallery thumbs...
