@@ -1,0 +1,34 @@
+div#shell {
+    border: 1px solid red;
+    height: 100%;
+    width: 100%;
+    position:relative;
+}
+
+/*image item*/
+div#shell div>div {
+    border: 1px solid grey;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*gallery title*/
+div#shell div h2{
+    background-color: white;
+    border: 1px solid yellow;
+    position: absolute;
+    z-index: 1;
+}
+
+/*Picture Title*/
+div#shell div span {
+    border: 1px solid blue;
+    display: block;
+    text-align: center;
+}
+
+div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
+.hide {
+    visibility: hidden !important;
+    display: none !important;
+}
