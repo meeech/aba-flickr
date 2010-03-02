@@ -34,8 +34,9 @@ var initgallery = function(data) {
     container.append(Y.Node.create('<h2>' + tagName +'</h2>'));
     container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));
 
-    //The area where we show thumbnails.
-    Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));
+    //The area where we show thumbnails
+    //Trick here is we only want to create the item once..
+    Y.one('div#thumbs') || Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));
 
     //Store data under tag name Make index image
     bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
