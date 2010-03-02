@@ -1,21 +1,26 @@
 body {
+    background-color: #000;
     margin: 0px;
     padding: 0px;
 }
+
 div#shell {
     border: 1px solid red;
+    top: 30px;
+    left: 50px;
     position:relative;
-    width
+    height: 540px;
+    width: 700px;
 }
 
 div#shell>div {
-    border: 3px solid cyan;
+/*    border: 3px solid cyan;*/
     display:inline-block;
 }
 
 /*image item*/
 div#shell div>div {
-    border: 3px solid grey;
+/*    border: 3px solid grey;*/
     display: inline-block;
     vertical-align: top;
 }
@@ -49,20 +54,56 @@ div#shell div span {
     text-align: center;
 }
 
-div.index {
-    height:100px;
+/*div.index {
     overflow: hidden;
     width: 133px;
 }
-
+*/
 /*Position the Index Pictures a bit more centered.*/
 div.index img {position: relative;
-    left: -50px;
+/*    left: -50px;
     top: -30px;
+*/
 }
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
 .hide {
     visibility: hidden !important;
     display: none !important;
+}
+
+/*Tag Styling*/
+div#fireworks {
+    overflow:hidden;
+    border: 20px solid grey;
+    position:absolute;
+    height: 500px;
+    width: 150px;
+    top: 0px;
+}
+
+div#fireworks img {
+    border: 0px;
+    height:500px;
+}
+
+div#night,
+div#israel,
+div#montreal,
+div#lighthouse {
+    
+    overflow:hidden;
+    border: 20px solid blue;
+    position:absolute;
+    height: 200px;
+    width: 150px;
+    left: 200px;
+    top: 50px;
+}
+
+div#night img {
+    position: absolute;
+    left: 0;
+    top:0;
+    height:200px;
 }
