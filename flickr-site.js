@@ -144,6 +144,10 @@ Y.delegate('click', function(e) {
         width: Y.DOM.winWidth()+'px'
     });
 
+    Shadowbox.setup("div.shadowbox a", {
+        gallery:"My Movies"
+    });
+
     // gallery.replaceClass('showing', 'hide');
     
 }, 'div#shell',  'h2,div.index a');
@@ -151,7 +155,8 @@ Y.delegate('click', function(e) {
 /* Shadowbox image*/
 Y.delegate('click', function(e) {
     e.halt();
-
+    // @todo open sbox from sbox? how to?
+    Shadowbox.close();
     Shadowbox.open({
        content:    this.get('href'),
        player:     "img",
