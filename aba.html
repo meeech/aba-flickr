@@ -71,8 +71,26 @@
     var abaConfig = YUI.namespace('flickr-site.config');
     abaConfig.flickrUserName = 'amisoll';
     abaConfig.flickrUserId = '35130544@N02';    
-    abaConfig.tags = ['montreal', 'fireworks', 'israel', 'night', 'lighthouse'];    
+    abaConfig.tags = ['montreal', 'fireworks'];
     </script>
     <!-- <script src="flickr-site.js" type="text/javascript" charset="utf-8"></script> -->
+    
+<script type="text/javascript" charset="utf-8">
+YUI().use('dom','node', 'event-resize',  function(Y) { Y.on("domready", function() { // BEGIN Y closure
+
+var sizeUpShell = function() {
+    Y.one('#shell').setStyle('height', Y.DOM.winHeight()+'px');
+};
+sizeUpShell();
+
+Y.on("windowresize", function() {
+    sizeUpShell();
+}, window);
+
+//end closure
+});});
+    
+</script>
+    
 </body>
 </html>
