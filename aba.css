@@ -3,14 +3,17 @@ body {
     margin: 100px 0 0 0;
     padding: 0px;
 }
+
 img {
     border: 0px;
 }
+
 div#shell {
     margin: auto;
     position:relative;
     height: 540px;
     width: 700px;
+    z-index: 0;
 }
 
 div#shell>div {
@@ -25,10 +28,13 @@ div#shell div>div {
     vertical-align: top;
 }
 
-div#shell>div#thumbs {
+div#shell div.gallery {
     display: block;
+    z-index: 4;
+    position: absolute;
 /*    border: 1px solid orange;*/
 }
+
 /*gallery title*/
 div#shell div h2{
     display: block;
@@ -84,6 +90,7 @@ div#shell div.tag {
     border: 20px solid #111;
     overflow:hidden;
     position:absolute;
+    z-index: 0;
 }
 
 div#shell div.tag:hover {

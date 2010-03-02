@@ -41,6 +41,38 @@ var initgallery = function(data) {
     return container;
 };
 
+var buildShadowGallery = function(tag) {
+    // var gallery = [];
+    
+     var options = {
+         continuous:     true,
+         counterType:    "skip"
+     };
+
+     // create an image object
+     var image1 = {
+         player:     "img",
+         title:      "Tiger",
+         content:    "http://farm4.static.flickr.com/3579/3491782869_776f9d798a_m.jpg",
+         options:    options
+     };
+
+     // create an image object
+     var image2 = {
+         player:     "img",
+         title:      "Tiger",
+         content:    "http://farm4.static.flickr.com/3579/3491782869_776f9d798a_m.jpg",
+         options:    options
+     };
+
+     Shadowbox.open([image1, image2]);
+    
+    Y.each( bb[tag].images , function(item, index) {
+        console.log(item);
+    });
+        
+};
+
 //Build all the gallery images. 
 var buildGallery = function(tag) {
     var imagesDiv = Y.Node.create('<div class="hide gallery"></div>');
@@ -61,7 +93,7 @@ var buildGallery = function(tag) {
  */
 var buildGalleryNode = function(item, options) {
     options = options || {};
-    var htmlT = "<div class='{class}'><a title='{title}' href='{image_src}'><img src='{thumb_src}'></a><span>{title}</span></div>";
+    var htmlT = "<div class='{class}'><a rel='shadowbox' title='{title}' href='{image_src}'><img src='{thumb_src}'></a><span>{title}</span></div>";
     item['thumb_src'] = item.media.m; //fix the src
     item['image_src'] = item.media.m.replace('_m.jpg', '_b.jpg'); //fix the src
     item['class'] = options['class'] || '';
@@ -80,11 +112,17 @@ Y.delegate('click', function(e) {
     var tagName = this.get('title') || this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
 
+    //New - shadow gallery
+    // buildShadowGallery(tagName);
+    
     //The area where we show thumbnails like this, 
     //it allows thumbs to be pre-defined in HTML, or we make & attach it
-    var thumbsDiv = Y.one('div#thumbs') || Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));    
-    
-    if(false == gallery.inDoc()) {
+    var thumbsDiv = Y.one('div#thumbs') || Y.Node.create('<div id="thumbs"></div>');
+
+    if(false === thumbsDiv.inDoc()) {
+        Y.one('#shell').append(thumbsDiv); 
+    }
+    if(false === gallery.inDoc()) {
         thumbsDiv.append(gallery);
     }
 
