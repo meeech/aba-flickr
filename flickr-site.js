@@ -117,25 +117,32 @@ Y.delegate('click', function(e) {
     
     //The area where we show thumbnails like this, 
     //it allows thumbs to be pre-defined in HTML, or we make & attach it
-    var thumbsDiv = Y.one('div#thumbs') || Y.Node.create('<div id="thumbs"></div>');
-
-    if(false === thumbsDiv.inDoc()) {
-        Y.one('#shell').append(thumbsDiv); 
-    }
-    if(false === gallery.inDoc()) {
-        thumbsDiv.append(gallery);
-    }
+    // var thumbsDiv = Y.one('div#thumbs') || Y.Node.create('<div id="thumbs"></div>');
+    // 
+    // if(false === thumbsDiv.inDoc()) {
+    //     Y.one('#shell').append(thumbsDiv); 
+    // }
+    // if(false === gallery.inDoc()) {
+    //     thumbsDiv.append(gallery);
+    // }
 
     //Trying to hide any open galleries before showing new one. caling it a night
-    if(gallery.hasClass('hide')){
-        if(thumbsDiv.one('div.showing')){
-            thumbsDiv.one('div.showing').replaceClass('showing', 'hide');
-        }
-        gallery.replaceClass('hide', 'showing');
-       // gallery.toggleClass('hide');
-    } else {
-        gallery.toggleClass('hide');
-    }
+    // if(gallery.hasClass('hide')){
+    //     if(thumbsDiv.one('div.showing')){
+    //         thumbsDiv.one('div.showing').replaceClass('showing', 'hide');
+    //     }
+    //     gallery.replaceClass('hide', 'showing');
+    //    // gallery.toggleClass('hide');
+    // } else {
+    //     gallery.toggleClass('hide');
+    // }
+
+    Shadowbox.open({
+        content: gallery.get('innerHTML'),
+        player: 'html',
+        height: Y.DOM.winHeight()+'px',
+        width: Y.DOM.winWidth()+'px'
+    });
 
     // gallery.replaceClass('showing', 'hide');
     
@@ -143,14 +150,15 @@ Y.delegate('click', function(e) {
 
 /* Shadowbox image*/
 Y.delegate('click', function(e) {
-    e.halt();    
+    e.halt();
+
     Shadowbox.open({
        content:    this.get('href'),
        player:     "img",
        title:      this.get('title') || ''
     });
 
-}, 'div#shell', 'div.shadowbox a');
+}, 'div#sb-player', 'div.shadowbox a');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');

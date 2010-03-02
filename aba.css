@@ -156,3 +156,7 @@ div#israel img {
     min-width: 150px;
 }
 
+/*shadowbox*/
+div.shadowbox {
+    display: inline;
+}
