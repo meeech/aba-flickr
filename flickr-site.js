@@ -19,8 +19,8 @@ jsonFlickrFeed = function (data) {
  * @return Node (the container div)
  */
 var initgallery = function(data) {
-    // var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
-    var randomIndex = 1;
+    var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
+    // var randomIndex = 1;
     
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', '');
