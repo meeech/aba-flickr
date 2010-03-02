@@ -1,7 +1,5 @@
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
-// Used for filtering to get the tag name
-
 // domready wrapped in use
 YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
