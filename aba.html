@@ -9,7 +9,7 @@
     </head>
 <body>
 <div id="shell">
-    <div id="lighthouse">
+    <div class="tag" id="lighthouse">
         <h2>
             lighthouse
         </h2>
@@ -20,7 +20,7 @@
             <a title="lighthouse" href="http://farm4.static.flickr.com/3419/3313036432_e1ee3c7e38_b.jpg"><img src="http://farm4.static.flickr.com/3419/3313036432_e1ee3c7e38_m.jpg"></a><span>lighthouse</span>
         </div>
     </div>
-    <div id="night">
+    <div class="tag" id="night">
         <h2>
             night
         </h2>
@@ -31,7 +31,7 @@
             <a title="night" href="http://farm3.static.flickr.com/2225/3539776858_d4f82d714c_b.jpg"><img src="http://farm3.static.flickr.com/2225/3539776858_d4f82d714c_m.jpg"></a><span>night</span>
         </div>
     </div>
-    <div id="israel">
+    <div class="tag" id="israel">
         <h2>
             israel
         </h2>
@@ -42,7 +42,7 @@
             <a title="israel" href="http://farm3.static.flickr.com/2441/3843449983_92e1d57989_b.jpg"><img src="http://farm3.static.flickr.com/2441/3843449983_92e1d57989_m.jpg"></a><span>israel</span>
         </div>
     </div>
-    <div id="fireworks">
+    <div class="tag" id="fireworks">
         <h2>
             fireworks
         </h2>
@@ -53,7 +53,7 @@
             <a title="fireworks" href="http://farm4.static.flickr.com/3361/3477389537_ea68c56bcb_b.jpg"><img src="http://farm4.static.flickr.com/3361/3477389537_ea68c56bcb_m.jpg"></a><span>fireworks</span>
         </div>
     </div>
-    <div id="montreal">
+    <div class="tag" id="montreal">
         <h2>
             montreal
         </h2>
@@ -81,11 +81,10 @@ YUI().use('dom','node', 'event-resize',  function(Y) { Y.on("domready", function
 var sizeUpShell = function() {
     Y.one('#shell').setStyle('height', Y.DOM.winHeight()+'px');
 };
-sizeUpShell();
-
-Y.on("windowresize", function() {
-    sizeUpShell();
-}, window);
+// sizeUpShell();
+// Y.on("windowresize", function() {
+//     sizeUpShell();
+// }, window);
 
 //end closure
 });});

@@ -27,7 +27,7 @@ var initgallery = function(data) {
     bb[tagName] = {};
     bb[tagName]['gallery'] = false;
 
-    var container = Y.Node.create('<div id="' + tagName + '"></div>');
+    var container = Y.Node.create('<div class="tag" id="' + tagName + '"></div>');
 
     container.append(Y.Node.create('<h2>' + tagName +'</h2>'));
     container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));

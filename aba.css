@@ -3,11 +3,10 @@ body {
     margin: 0px;
     padding: 0px;
 }
-
+img {
+    border: 0px;
+}
 div#shell {
-    border: 1px solid red;
-    top: 30px;
-    left: 50px;
     position:relative;
     height: 540px;
     width: 700px;
@@ -27,7 +26,7 @@ div#shell div>div {
 
 div#shell>div#thumbs {
     display: block;
-    border: 1px solid orange;
+/*    border: 1px solid orange;*/
 }
 /*gallery title*/
 div#shell div h2{
@@ -49,7 +48,7 @@ div#shell div h3{
 
 /*Picture Title*/
 div#shell div span {
-    border: 1px solid blue;
+/*    border: 1px solid blue;*/
     display: block;
     text-align: center;
 }
@@ -73,10 +72,23 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
 }
 
 /*Tag Styling*/
-div#fireworks {
+div#shell div.tag {
+    border: 20px solid #111;
     overflow:hidden;
-    border: 20px solid grey;
     position:absolute;
+}
+
+div#shell div.tag:hover {
+    border-color: #333;
+}
+
+div#night, div#israel,
+div#montreal, div#lighthouse {
+    height: 200px;
+    width: 150px;
+}
+
+div#fireworks {
     height: 500px;
     width: 150px;
     top: 0px;
@@ -87,23 +99,31 @@ div#fireworks img {
     height:500px;
 }
 
-div#night,
-div#israel,
-div#montreal,
 div#lighthouse {
-    
-    overflow:hidden;
-    border: 20px solid blue;
-    position:absolute;
-    height: 200px;
-    width: 150px;
     left: 200px;
-    top: 50px;
+    top:250px;
+    height:250px;
 }
 
-div#night img {
+div#montreal {
+    left: 200px;
+    top:0px;
+}
+
+div#montreal img {
     position: absolute;
     left: 0;
     top:0;
     height:200px;
 }
+
+div#night {
+    left: 400px;
+    top:0px;
+}
+
+div#israel {
+    left: 400px;
+    top:250px;
+}
+
