@@ -34,10 +34,6 @@ var initgallery = function(data) {
     container.append(Y.Node.create('<h2>' + tagName +'</h2>'));
     container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));
 
-    //The area where we show thumbnails
-    //Trick here is we only want to create the item once..
-    Y.one('div#thumbs') || Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));
-
     //Store data under tag name Make index image
     bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
     bb[tagName]['indexImageNode'] = buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index');
@@ -86,16 +82,18 @@ Y.delegate('click', function(e) {
     var tagName = this.get('title') || this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
 
+    //The area where we show thumbnails like this, 
+    //it allows thumbs to be pre-defined in HTML, or we make & attach it
+    var thumbsDiv = Y.one('div#thumbs') || Y.one('#shell').append(Y.Node.create('<div id="thumbs"></div>'));    
+    
     if(false == gallery.inDoc()) {
-        // e.container.append(gallery);
-        Y.one('#thumbs').append(gallery);
-        // bb[tagName]['container'].append(gallery);        
+        thumbsDiv.append(gallery);
     }
 
     //Trying to hide any open galleries before showing new one. caling it a night
     if(gallery.hasClass('hide')){
-        if(Y.one('#thumbs').one('div.showing')){
-            Y.one('#thumbs').one('div.showing').replaceClass('showing', 'hide');
+        if(thumbsDiv.one('div.showing')){
+            thumbsDiv.one('div.showing').replaceClass('showing', 'hide');
         }
         gallery.replaceClass('hide', 'showing');
        // gallery.toggleClass('hide');
