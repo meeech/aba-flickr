@@ -128,9 +128,11 @@ Y.each(abaConfig.tags, function(el) {
 
 var objTransaction = Y.Get.script(urls, {
     onEnd: function() {
-        Shadowbox.init({
-            skipSetup: true
-        });
+    },
+    onSuccess: function() {
+       Shadowbox.init({
+           skipSetup: true
+       });
     }
 });
 
