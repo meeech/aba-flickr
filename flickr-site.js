@@ -147,7 +147,7 @@ Y.delegate('click', function(e) {
     Shadowbox.open({
        content:    this.get('href'),
        player:     "img",
-       title:      this.title || ''
+       title:      this.get('title') || ''
     });
 
 }, 'div#shell', 'div.shadowbox a');
