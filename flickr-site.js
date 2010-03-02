@@ -37,7 +37,7 @@ var initgallery = function(data) {
     bb[tagName]['indexImageNode'] = buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index');
     bb[tagName]['images'] = data.items;
     bb[tagName]['container'] = container;
-    container.append(buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index'));
+    container.append(bb[tagName]['indexImageNode']);
     return container;
 };
 
