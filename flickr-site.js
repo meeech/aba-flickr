@@ -109,10 +109,12 @@ Y.delegate('click', function(e) {
     var tagName = this.get('title') || this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
 
+
+    //Maybe have it position itself below the thumbs, and just dont bother with CLOSE button - clicking on index thumbs will close one gal, open the other. 
     var overlay = new Y.Overlay({
         headerContent: tagName,
         bodyContent: gallery,
-        // footerContent:"info here...",
+        footerContent:"CLOSE",
         // height: Y.DOM.winHeight()+'px',
         // height: '400px',
         // width: '600px',
