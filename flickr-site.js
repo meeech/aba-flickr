@@ -1,7 +1,7 @@
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
 // domready wrapped in use
-YUI().use('node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
+YUI().use('cssreset','cssfonts', 'cssbase', 'node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
@@ -114,12 +114,15 @@ Y.delegate('click', function(e) {
     var overlay = new Y.Overlay({
         headerContent: tagName,
         bodyContent: gallery,
-        footerContent:"info here...",
-        height: '300px'
+        // footerContent:"info here...",
+        // height: Y.DOM.winHeight()+'px',
+        height: '400px',
+        width: '600px',
+        zIndex: 10
         // centered: Y.one("#shell")
     });
     //Specify element specifically, otherwise overlay appears UNDER index thumbs
-    overlay.render("#shell");
+    overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
 
     Shadowbox.setup("div#shell div.thumb a", {
         gallery:tagName

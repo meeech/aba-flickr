@@ -1,16 +1,21 @@
 div#shell {
     position:relative;
-    
-    min-height: 500px;
-    height: 100%;
-    width: 100%;
-
     border: 1px solid #ccc;
 }
 
 div#shell div.tag {
     border: 3px solid brown;
     display:inline-block;
+}
+
+div#shell div.gallery-overlay {
+    background-color: #fff;
+}
+
+
+div#shell div.gallery-overlay div.yui-widget-hd {
+    font-weight: bold;
+    font-size: 250%;
 }
 
 /*image item*/
@@ -20,10 +25,6 @@ div#shell div.gallery div.thumb {
     vertical-align: top;
 }
 
-div#shell>div#thumbs {
-    display: block;
-    border: 1px solid orange;
-}
 /*gallery title*/
 div#shell div h2{
     background-color: white;
@@ -31,6 +32,7 @@ div#shell div h2{
     position: absolute;
     z-index: 1;
 }
+
 /*gallery count*/
 div#shell div h3{
     background-color: white;
