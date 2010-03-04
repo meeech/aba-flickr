@@ -1,7 +1,7 @@
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
 // domready wrapped in use
-YUI().use('node', 'substitute', 'dump', 'event-delegate', function(Y) { Y.on("domready", function() { // BEGIN Y closure
+YUI().use('node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
@@ -75,7 +75,7 @@ var buildShadowGallery = function(tag) {
 
 //Build all the gallery images. 
 var buildGallery = function(tag) {
-    var imagesDiv = Y.Node.create('<div class="hide gallery"></div>');
+    var imagesDiv = Y.Node.create('<div class="gallery"></div>');
     Y.each( bb[tag].images , function(item, index) {
          var node = buildGalleryNode(item, {'class' : 'shadowbox'} );
          imagesDiv.append(node);
@@ -102,68 +102,31 @@ var buildGalleryNode = function(item, options) {
     return Y.Node.create(Y.substitute(htmlT , item));
 };
 
+
+
+
 //Show hide the gallery thumbs...
 //show the stack when cover image is clicked. 
 //remove hide class from the stack,
 //hide index
-
 Y.delegate('click', function(e) {
     e.halt();
     var tagName = this.get('title') || this.get('innerHTML');
     var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
 
-    //New - shadow gallery
-    // buildShadowGallery(tagName);
-    
-    //The area where we show thumbnails like this, 
-    //it allows thumbs to be pre-defined in HTML, or we make & attach it
-    // var thumbsDiv = Y.one('div#thumbs') || Y.Node.create('<div id="thumbs"></div>');
-    // 
-    // if(false === thumbsDiv.inDoc()) {
-    //     Y.one('#shell').append(thumbsDiv); 
-    // }
-    // if(false === gallery.inDoc()) {
-    //     thumbsDiv.append(gallery);
-    // }
-
-    //Trying to hide any open galleries before showing new one. caling it a night
-    // if(gallery.hasClass('hide')){
-    //     if(thumbsDiv.one('div.showing')){
-    //         thumbsDiv.one('div.showing').replaceClass('showing', 'hide');
-    //     }
-    //     gallery.replaceClass('hide', 'showing');
-    //    // gallery.toggleClass('hide');
-    // } else {
-    //     gallery.toggleClass('hide');
-    // }
-
-    Shadowbox.open({
-        content: gallery.get('innerHTML'),
-        player: 'html',
-        height: Y.DOM.winHeight()+'px',
-        width: Y.DOM.winWidth()+'px'
+    var overlay = new Y.Overlay({
+        headerContent: tagName,
+        bodyContent: gallery,
+        footerContent:"info here..."
     });
+
+    //SPecify document body specifically, otherwise overlay appears UNDER index thumbs
+    overlay.render(document.body);
 
     Shadowbox.setup("div.shadowbox a", {
-        gallery:"My Movies"
-    });
-
-    // gallery.replaceClass('showing', 'hide');
-    
+        gallery:tagName
+    });    
 }, 'div#shell',  'h2,div.index a');
-
-/* Shadowbox image*/
-Y.delegate('click', function(e) {
-    e.halt();
-    // @todo open sbox from sbox? how to?
-    Shadowbox.close();
-    Shadowbox.open({
-       content:    this.get('href'),
-       player:     "img",
-       title:      this.get('title') || ''
-    });
-
-}, 'div#sb-player', 'div.shadowbox a');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
