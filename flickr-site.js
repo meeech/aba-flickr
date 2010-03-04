@@ -1,13 +1,15 @@
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
 // domready wrapped in use
-YUI().use('cssreset','cssfonts', 'cssbase', 'node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
+YUI().use('node-event-simulate', 'cssreset','cssfonts', 'cssbase', 'node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').prepend(initgallery(data));
+    
+    Y.one("div#night.tag>h2").simulate('click');
     return true;
 };
 
@@ -127,7 +129,7 @@ Y.delegate('click', function(e) {
     Shadowbox.setup("div#shell div.thumb a", {
         gallery:tagName
     });    
-}, 'div#shell',  'h2,div.index a');
+}, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
