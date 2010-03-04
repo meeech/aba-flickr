@@ -1,8 +1,11 @@
 div#shell {
-    border: 1px solid red;
+    position:relative;
+    
+    min-height: 500px;
     height: 100%;
     width: 100%;
-    position:relative;
+
+    border: 1px solid red;
 }
 
 div#shell>div {

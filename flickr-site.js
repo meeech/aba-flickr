@@ -102,9 +102,6 @@ var buildGalleryNode = function(item, options) {
     return Y.Node.create(Y.substitute(htmlT , item));
 };
 
-
-
-
 //Show hide the gallery thumbs...
 //show the stack when cover image is clicked. 
 //remove hide class from the stack,
@@ -117,11 +114,13 @@ Y.delegate('click', function(e) {
     var overlay = new Y.Overlay({
         headerContent: tagName,
         bodyContent: gallery,
-        footerContent:"info here..."
+        footerContent:"info here...",
+        height: 500
+        // centered: Y.one("#shell")
     });
 
     //SPecify document body specifically, otherwise overlay appears UNDER index thumbs
-    overlay.render(document.body);
+    overlay.render("#shell");
 
     Shadowbox.setup("div.shadowbox a", {
         gallery:tagName
