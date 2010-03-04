@@ -116,8 +116,8 @@ Y.delegate('click', function(e) {
         bodyContent: gallery,
         // footerContent:"info here...",
         // height: Y.DOM.winHeight()+'px',
-        height: '400px',
-        width: '600px',
+        // height: '400px',
+        // width: '600px',
         zIndex: 10
         // centered: Y.one("#shell")
     });

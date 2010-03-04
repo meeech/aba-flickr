@@ -1,26 +1,35 @@
+/* Everything happens in shell */
 div#shell {
     position:relative;
-    border: 1px solid #ccc;
+/*    border: 1px solid #ccc;*/
 }
+
+/*The Index Thumb you clikck on to see a gallery. Includes the tag name*/
 
 div#shell div.tag {
     border: 3px solid brown;
     display:inline-block;
 }
 
+/* The bounding box for the gallery overlay*/
 div#shell div.gallery-overlay {
     background-color: #fff;
 }
-
 
 div#shell div.gallery-overlay div.yui-widget-hd {
     font-weight: bold;
     font-size: 250%;
 }
 
+div#shell div.gallery-overlay div.yui-widget-bd {
+    overflow:auto;
+}
 /*image item*/
 div#shell div.gallery div.thumb {
-    border: 3px solid red;
+    width: 150px;
+    height: 100px;
+    overflow: hidden;
+/*    border: 3px solid red;*/
     display: inline-block;
     vertical-align: top;
 }
@@ -67,9 +76,4 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
 .hide {
     visibility: hidden !important;
     display: none !important;
-}
-
-
-div.yui-widget {
-    overflow:auto;
 }
