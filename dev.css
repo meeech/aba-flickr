@@ -71,10 +71,9 @@ div.index {
 
 /*Position the Index Pictures a bit more centered.*/
 div.index img {
-/*    position: relative;*/
-/*    left: -50px;
-    top: -30px;
-*/
+    width:133px;
+    min-height: 100px;
+    position: relative;
 }
 
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
