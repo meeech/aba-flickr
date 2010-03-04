@@ -158,6 +158,6 @@ div#israel img {
 }
 
 /*shadowbox*/
-div.thumb {
+div.gallery div.thumb {
     display: inline;
 }

@@ -66,3 +66,8 @@ div#shell div.index span, /*We want to hide the picture title when its the galle
     visibility: hidden !important;
     display: none !important;
 }
+
+
+div.yui-widget {
+    overflow:auto;
+}

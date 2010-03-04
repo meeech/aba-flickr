@@ -115,7 +115,7 @@ Y.delegate('click', function(e) {
         headerContent: tagName,
         bodyContent: gallery,
         footerContent:"info here...",
-        height: 500
+        height: '300px'
         // centered: Y.one("#shell")
     });
     //Specify element specifically, otherwise overlay appears UNDER index thumbs
