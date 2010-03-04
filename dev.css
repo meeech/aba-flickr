@@ -5,17 +5,17 @@ div#shell {
     height: 100%;
     width: 100%;
 
-    border: 1px solid red;
+    border: 1px solid #ccc;
 }
 
-div#shell>div {
-    border: 3px solid cyan;
+div#shell div.tag {
+    border: 3px solid brown;
     display:inline-block;
 }
 
 /*image item*/
-div#shell div>div {
-    border: 3px solid grey;
+div#shell div.gallery div.thumb {
+    border: 3px solid red;
     display: inline-block;
     vertical-align: top;
 }

@@ -77,7 +77,7 @@ var buildShadowGallery = function(tag) {
 var buildGallery = function(tag) {
     var imagesDiv = Y.Node.create('<div class="gallery"></div>');
     Y.each( bb[tag].images , function(item, index) {
-         var node = buildGalleryNode(item, {'class' : 'shadowbox'} );
+         var node = buildGalleryNode(item, {'class' : 'thumb'} );
          imagesDiv.append(node);
     });
     
@@ -118,11 +118,10 @@ Y.delegate('click', function(e) {
         height: 500
         // centered: Y.one("#shell")
     });
-
-    //SPecify document body specifically, otherwise overlay appears UNDER index thumbs
+    //Specify element specifically, otherwise overlay appears UNDER index thumbs
     overlay.render("#shell");
 
-    Shadowbox.setup("div.shadowbox a", {
+    Shadowbox.setup("div.thumb a", {
         gallery:tagName
     });    
 }, 'div#shell',  'h2,div.index a');
