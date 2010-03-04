@@ -121,7 +121,7 @@ Y.delegate('click', function(e) {
     //Specify element specifically, otherwise overlay appears UNDER index thumbs
     overlay.render("#shell");
 
-    Shadowbox.setup("div.thumb a", {
+    Shadowbox.setup("div#shell div.thumb a", {
         gallery:tagName
     });    
 }, 'div#shell',  'h2,div.index a');
