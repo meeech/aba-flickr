@@ -5,16 +5,20 @@ div#shell {
 }
 
 /*The Index Thumb you clikck on to see a gallery. Includes the tag name*/
-
 div#shell div.tag {
     border: 3px solid brown;
     display:inline-block;
 }
 
-/* The bounding box for the gallery overlay*/
+/* The bounding box for the gallery thumbs */
 div#shell div.gallery-overlay {
     background-color: #fff;
-    top: 30px;
+
+    /* Why !important? we want to override the inline YUI style. 
+     * this allows you to control position, for example. 
+    */
+    top: 100px !important;
+    width: 100% !important;
 }
 
 div#shell div.gallery-overlay div.yui-widget-hd {
