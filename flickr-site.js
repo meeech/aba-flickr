@@ -5,6 +5,8 @@ YUI().use('node-event-simulate', 'cssreset','cssfonts', 'cssbase', 'node', 'subs
 //Our data dump. 
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
+// @setup default of abaconfig if its not setup. 
+
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').prepend(initgallery(data));
@@ -64,7 +66,9 @@ var buildGalleryNode = function(item, options) {
     options = options || {};
     var htmlT = "<div class='{class}'><a rel='shadowbox' title='{title}' href='{image_src}'><img src='{thumb_src}'></a><div class='title'>{title}</div></div>";
     item['thumb_src'] = item.media.m; //fix the src
-    item['image_src'] = item.media.m.replace('_m.jpg', '_b.jpg'); //fix the src
+
+    var suffix = abaConfig['pictureSize'] || '';
+    item['image_src'] = item.media.m.replace('_m.jpg', suffix+'.jpg'); //fix the src
     item['class'] = options['class'] || '';
     item['title'] = options['title'] || item['title'];
 
@@ -109,7 +113,6 @@ Y.delegate('click', function(e) {
         overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
         overlay.on('click', function(e) {
             e.halt();
-            console.log(e);
         });
         bb[tagName]['overlay'] = overlay;
     }
