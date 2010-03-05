@@ -90,17 +90,19 @@ var buildGalleryOverlay = function(tagName) {
 Y.delegate('click', function(e) {
     e.halt();
 
+    //Handle Close Buttons in the hd and ft of the widget
+    //They could really be anywhere in the widget, fyi.
     if(e.currentTarget.hasClass('overlay-close')){
         Y.Widget.getByNode(Y.one(this)).hide();
         bb['currentlyVisible'] = false;
         return;
     }
 
+    //Otherwise, do the math...
     var tagName = this.get('title') || this.get('innerHTML'),
         overlay = bb[tagName]['overlay'] || false,
         currentlyVisible = bb['currentlyVisible'] || false;
 
-    //Maybe have it position itself below the thumbs, and just dont bother with CLOSE button - clicking on index thumbs will close one gal, open the other. 
     if(false === overlay) {
         overlay = buildGalleryOverlay(tagName);
         //Specify element specifically, otherwise overlay appears UNDER index thumbs
@@ -116,8 +118,8 @@ Y.delegate('click', function(e) {
         currentlyVisible.hide();
         bb['currentlyVisible'] = false;
     }
-    
-    if(!(currentlyVisible == overlay)) {
+    //Don't show one we just hid
+    if(overlay != currentlyVisible) {
         overlay.show();
         bb["currentlyVisible"] = overlay;        
     }
