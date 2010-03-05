@@ -9,7 +9,7 @@ jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').prepend(initgallery(data));
     
-    Y.one("div#night.tag>h2").simulate('click');
+    // Y.one("div#night.tag>h2").simulate('click');
     return true;
 };
 
@@ -24,6 +24,8 @@ var initgallery = function(data) {
     var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', '');
+
+    //init the bb area for the gallery.
     bb[tagName] = {};
     bb[tagName]['gallery'] = false;
 
@@ -38,39 +40,8 @@ var initgallery = function(data) {
     bb[tagName]['images'] = data.items;
     bb[tagName]['container'] = container;
     container.append(bb[tagName]['indexImageNode']);
+
     return container;
-};
-
-var buildShadowGallery = function(tag) {
-    // var gallery = [];
-    
-     var options = {
-         continuous:     true,
-         counterType:    "skip"
-     };
-
-     // create an image object
-     var image1 = {
-         player:     "img",
-         title:      "Tiger",
-         content:    "http://farm4.static.flickr.com/3579/3491782869_776f9d798a_m.jpg",
-         options:    options
-     };
-
-     // create an image object
-     var image2 = {
-         player:     "img",
-         title:      "Tiger",
-         content:    "http://farm4.static.flickr.com/3579/3491782869_776f9d798a_m.jpg",
-         options:    options
-     };
-
-     Shadowbox.open([image1, image2]);
-    
-    Y.each( bb[tag].images , function(item, index) {
-        console.log(item);
-    });
-        
 };
 
 //Build all the gallery images. 
@@ -80,8 +51,7 @@ var buildGallery = function(tag) {
          var node = buildGalleryNode(item, {'class' : 'thumb'} );
          imagesDiv.append(node);
     });
-    
-    bb[tag]['gallery'] = imagesDiv;    
+
     return imagesDiv;
 };
 
@@ -108,13 +78,13 @@ var buildGalleryNode = function(item, options) {
 //hide index
 Y.delegate('click', function(e) {
     e.halt();
-    var tagName = this.get('title') || this.get('innerHTML');
-    var gallery = bb[tagName]['gallery'] || buildGallery(tagName);
+    var tagName = this.get('title') || this.get('innerHTML'),
+        overlay = bb[tagName]['overlay'] || false;
 
     //Maybe have it position itself below the thumbs, and just dont bother with CLOSE button - clicking on index thumbs will close one gal, open the other. 
-    var overlay = new Y.Overlay({
+    overlay = new Y.Overlay({
         headerContent: tagName,
-        bodyContent: gallery,
+        bodyContent: bb[tagName]['gallery'] || buildGallery(tagName),
         footerContent:"CLOSE",
         // height: Y.DOM.winHeight()+'px',
         // height: '400px',
@@ -126,7 +96,7 @@ Y.delegate('click', function(e) {
     overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
 
     Shadowbox.setup("div#shell div.thumb a", {
-        gallery:tagName
+        "gallery": tagName
     });    
 }, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a');
 
