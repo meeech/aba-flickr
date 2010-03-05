@@ -71,6 +71,18 @@ var buildGalleryNode = function(item, options) {
     return Y.Node.create(Y.substitute(htmlT , item));
 };
 
+var buildGalleryOverlay = function(tagName) {
+    return new Y.Overlay({
+        headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
+        bodyContent: buildGallery(tagName),
+        footerContent:"<div class='overlay-close'><span>Close</span></a>",
+        // height: Y.DOM.winHeight()+'px',
+        // height: '400px',
+        zIndex: 10
+        // centered: Y.one("#shell")
+    });
+};
+
 //Show hide the gallery thumbs...
 //show the stack when cover image is clicked. 
 //remove hide class from the stack,
@@ -84,15 +96,7 @@ Y.delegate('click', function(e) {
 
     //Maybe have it position itself below the thumbs, and just dont bother with CLOSE button - clicking on index thumbs will close one gal, open the other. 
     if(false === overlay) {
-        overlay = new Y.Overlay({
-            headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
-            bodyContent: buildGallery(tagName),
-            footerContent:"<div class='overlay-close'><span>Close</span></a>",
-            // height: Y.DOM.winHeight()+'px',
-            // height: '400px',
-            zIndex: 10
-            // centered: Y.one("#shell")
-        });
+        overlay = buildGalleryOverlay(tagName);
         //Specify element specifically, otherwise overlay appears UNDER index thumbs
         overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
         bb[tagName]['overlay'] = overlay;
