@@ -18,18 +18,49 @@ div#shell div.gallery-overlay {
      * this allows you to control position, for example. 
     */
     top: 100px !important;
-    width: 100% !important;
+    width: 99% !important;
 }
 
-div#shell div.gallery-overlay div.yui-widget-hd {
+div#shell div.gallery-overlay div.yui-widget-hd h1{
+    display: inline;
     font-weight: bold;
     font-size: 250%;
+    margin: 0;
+    padding-right: 20px;
+}
+
+div#shell div.gallery-overlay div.yui-widget-ft div.overlay-close {
+    left: 50%;
+}
+
+div#shell div.gallery-overlay div.yui-widget-hd div.overlay-close,
+div#shell div.gallery-overlay div.yui-widget-ft div.overlay-close  {
+    border: 1px solid grey;
+    font-weight: bold;
+    padding: 5px;
+    position:absolute;
+    top:0;
+    text-transform:uppercase;
+}
+
+div#shell div.gallery-overlay div.yui-widget-hd div.overlay-close {
+    display: inline;
+    margin-bottom: 10px;
+    position:static;
 }
 
 div#shell div.gallery-overlay div.yui-widget-bd {
     overflow:auto;
 }
 
+div#shell div.gallery-overlay div.yui-widget-ft {
+    position: relative;
+}
+
+/*div#shell div.gallery-overlay div.yui-widget-ft div.overlay-close {
+
+}
+*/
 /*image item*/
 div#shell div.gallery div.thumb {
     width: 150px;
@@ -38,6 +69,7 @@ div#shell div.gallery div.thumb {
 /*    border: 3px solid red;*/
     display: inline-block;
     vertical-align: top;
+    position: relative;
 }
 
 /*Gallery Index Thumbnails*/
@@ -60,11 +92,14 @@ div#shell div h3{
     z-index: 1;
 }
 
-/*Picture Title*/
-div#shell div span {
-    border: 1px solid blue;
+/*Picture Title in Thumb Gallery*/
+div#shell div.thumb div.title {
+    background-color: #fff;
+    top:0;
     display: block;
-    text-align: center;
+    opacity: 0.8;
+    right:0;
+    position:absolute;
 }
 
 div.index {

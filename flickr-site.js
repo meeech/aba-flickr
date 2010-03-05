@@ -27,7 +27,6 @@ var initgallery = function(data) {
 
     //init the bb area for the gallery.
     bb[tagName] = {};
-    bb[tagName]['gallery'] = false;
 
     var container = Y.Node.create('<div class="tag" id="' + tagName + '"></div>');
 
@@ -63,7 +62,7 @@ var buildGallery = function(tag) {
  */
 var buildGalleryNode = function(item, options) {
     options = options || {};
-    var htmlT = "<div class='{class}'><a rel='shadowbox' title='{title}' href='{image_src}'><img src='{thumb_src}'></a><span>{title}</span></div>";
+    var htmlT = "<div class='{class}'><a rel='shadowbox' title='{title}' href='{image_src}'><img src='{thumb_src}'></a><div class='title'>{title}</div></div>";
     item['thumb_src'] = item.media.m; //fix the src
     item['image_src'] = item.media.m.replace('_m.jpg', '_b.jpg'); //fix the src
     item['class'] = options['class'] || '';
@@ -78,26 +77,36 @@ var buildGalleryNode = function(item, options) {
 //hide index
 Y.delegate('click', function(e) {
     e.halt();
+
     var tagName = this.get('title') || this.get('innerHTML'),
-        overlay = bb[tagName]['overlay'] || false;
+        overlay = bb[tagName]['overlay'] || false,
+        currentlyVisible = bb['currentlyVisible'] || false;
 
     //Maybe have it position itself below the thumbs, and just dont bother with CLOSE button - clicking on index thumbs will close one gal, open the other. 
-    overlay = new Y.Overlay({
-        headerContent: tagName,
-        bodyContent: bb[tagName]['gallery'] || buildGallery(tagName),
-        footerContent:"CLOSE",
-        // height: Y.DOM.winHeight()+'px',
-        // height: '400px',
-        // width: '600px',
-        zIndex: 10
-        // centered: Y.one("#shell")
-    });
-    //Specify element specifically, otherwise overlay appears UNDER index thumbs
-    overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
+    if(false === overlay) {
+        overlay = new Y.Overlay({
+            headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
+            bodyContent: buildGallery(tagName),
+            footerContent:"<div class='overlay-close'><span>Close</span></a>",
+            // height: Y.DOM.winHeight()+'px',
+            // height: '400px',
+            zIndex: 10
+            // centered: Y.one("#shell")
+        });
+        //Specify element specifically, otherwise overlay appears UNDER index thumbs
+        overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
+        bb[tagName]['overlay'] = overlay;
+    }
+
+    if(currentlyVisible) {
+        currentlyVisible.hide();
+    }
+    overlay.show();
+    bb["currentlyVisible"] = overlay;
 
     Shadowbox.setup("div#shell div.thumb a", {
         "gallery": tagName
-    });    
+    });
 }, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
