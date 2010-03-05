@@ -90,6 +90,12 @@ var buildGalleryOverlay = function(tagName) {
 Y.delegate('click', function(e) {
     e.halt();
 
+    if(e.currentTarget.hasClass('overlay-close')){
+        Y.Widget.getByNode(Y.one(this)).hide();
+        bb['currentlyVisible'] = false;
+        return;
+    }
+
     var tagName = this.get('title') || this.get('innerHTML'),
         overlay = bb[tagName]['overlay'] || false,
         currentlyVisible = bb['currentlyVisible'] || false;
@@ -99,19 +105,27 @@ Y.delegate('click', function(e) {
         overlay = buildGalleryOverlay(tagName);
         //Specify element specifically, otherwise overlay appears UNDER index thumbs
         overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
+        overlay.on('click', function(e) {
+            e.halt();
+            console.log(e);
+        });
         bb[tagName]['overlay'] = overlay;
     }
 
     if(currentlyVisible) {
         currentlyVisible.hide();
+        bb['currentlyVisible'] = false;
     }
-    overlay.show();
-    bb["currentlyVisible"] = overlay;
-
+    
+    if(!(currentlyVisible == overlay)) {
+        overlay.show();
+        bb["currentlyVisible"] = overlay;        
+    }
+    
     Shadowbox.setup("div#shell div.thumb a", {
         "gallery": tagName
     });
-}, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a');
+}, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a, div.overlay-close');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
