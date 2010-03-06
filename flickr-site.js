@@ -5,7 +5,7 @@ var jsonFlickrFeed;
 YUI().use(
     'node-event-simulate', 
     'cssreset','cssfonts', 'cssbase',
-    'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
+    'substitute', 'dump', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
 var abaConfig = YUI.namespace('flickr-site.config');
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
@@ -99,7 +99,7 @@ var buildGalleryOverlay = function(tagName) {
 //show the stack when cover image is clicked. 
 //remove hide class from the stack,
 //hide index
-Y.delegate('click', function(e) {
+Y.one('div#shell').delegate('click', function(e) {
     e.halt();
 
     //Handle Close Buttons in the hd and ft of the widget
@@ -129,7 +129,8 @@ Y.delegate('click', function(e) {
             .one('div.thumb').getComputedStyle('width').replace('px','');
 
         //Due to bug, we are setting it in constructor, based on passed in config
-        //When done this way, only first is being centered properly.
+        //When done this way, only first is being centered properly, 
+        //but we can auto calculate it since we can get styles post render
         // var oWidth = thumbWidth * (abaConfig.galleryThumbsPerRow || 5);
         // overlay.set('width',oWidth);
 
@@ -152,7 +153,7 @@ Y.delegate('click', function(e) {
     Shadowbox.setup("div#shell div.gallery-" + tagIndex + " div.thumb a", {
         "gallery": tagName
     });
-}, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a, div.overlay-close');
+},'div.tag>h2,div.tag>h3, div.index a, div.overlay-close');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
