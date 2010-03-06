@@ -10,15 +10,16 @@ div#shell div.tag {
     display:inline-block;
 }
 
-/* The bounding box for the gallery thumbs */
+/* The wrapper box for the gallery thumbs */
 div#shell div.gallery-overlay {
     background-color: #fff;
-
+    border: 1px solid grey;
     /* Why !important? we want to override the inline YUI style. 
      * this allows you to control position, for example. 
+     * was used for center fix, but leaving here as example if you want to see how.
     */
-    top: 100px !important;
-    width: 99% !important;
+/*    top: 100px !important;*/
+/*    width: 99% !important;*/
 }
 
 div#shell div.gallery-overlay div.yui-widget-hd h1{
@@ -26,7 +27,7 @@ div#shell div.gallery-overlay div.yui-widget-hd h1{
     font-weight: bold;
     font-size: 250%;
     margin: 0;
-    padding-right: 20px;
+/*    padding-right: 20px;*/
 }
 
 div#shell div.gallery-overlay div.yui-widget-ft div.overlay-close {
