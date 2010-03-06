@@ -85,7 +85,7 @@ var buildGalleryOverlay = function(tagName) {
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
         id: "overlay-" + tagName.replace(/ /g, '-'),
         visible: false,
-        width: "750px",
+        width: abaConfig.galleryWidth || "80%",
         zIndex: 10,
         centered: true
     });
@@ -123,6 +123,9 @@ Y.delegate('click', function(e) {
             .addClass('gallery-overlay')
             //Get the thumbwidth
             .one('div.thumb').getComputedStyle('width').replace('px','');
+
+        //Due to bug, we are setting it in constructor, based on passed in config
+        //When done this way, only first is being centered properly.
         // var oWidth = thumbWidth * (abaConfig.galleryThumbsPerRow || 5);
         // overlay.set('width',oWidth);
 
