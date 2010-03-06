@@ -85,6 +85,7 @@ var buildGalleryOverlay = function(tagName) {
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
         id: "overlay-" + tagName.replace(/ /g, '-'),
         visible: false,
+        width: "750px",
         zIndex: 10,
         centered: true
     });
@@ -122,8 +123,8 @@ Y.delegate('click', function(e) {
             .addClass('gallery-overlay')
             //Get the thumbwidth
             .one('div.thumb').getComputedStyle('width').replace('px','');
-        var oWidth = thumbWidth * (abaConfig.galleryThumbsPerRow || 5);
-        overlay.set('width',oWidth);
+        // var oWidth = thumbWidth * (abaConfig.galleryThumbsPerRow || 5);
+        // overlay.set('width',oWidth);
 
         overlay.on('click', function(e) {
             e.halt();
