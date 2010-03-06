@@ -1,8 +1,10 @@
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
+
 // domready wrapped in use
 YUI().use('node-event-simulate', 'cssreset','cssfonts', 'cssbase', 'node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
+var abaConfig = YUI.namespace('flickr-site.config');
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
 // @setup default of abaconfig if its not setup. 
