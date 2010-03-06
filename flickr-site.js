@@ -82,8 +82,8 @@ var buildGalleryOverlay = function(tagName) {
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
         // height: Y.DOM.winHeight()+'px',
         // height: '400px',
-        zIndex: 10
-        // centered: Y.one("#shell")
+        zIndex: 10,
+        centered: true
     });
 };
 
