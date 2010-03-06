@@ -2,7 +2,10 @@
 var jsonFlickrFeed;
 
 // domready wrapped in use
-YUI().use('node-event-simulate', 'cssreset','cssfonts', 'cssbase', 'node', 'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
+YUI().use(
+    'node-event-simulate', 
+    'cssreset','cssfonts', 'cssbase',
+    'substitute', 'dump', 'event-delegate', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
 //Our data dump. 
 var abaConfig = YUI.namespace('flickr-site.config');
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
@@ -132,11 +135,7 @@ Y.delegate('click', function(e) {
         overlay.on('click', function(e) {
             e.halt();
         });
-        
         bb[tagIndex]['overlay'] = overlay;
-        
-        console.log(overlay.get('boundingBox'));
-
     }
 
     if(currentlyVisible) {
