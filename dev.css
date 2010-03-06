@@ -22,7 +22,7 @@ div#shell div.gallery-overlay {
 /*    width: 99% !important;*/
 }
 
-div#shell div.gallery-overlay div.yui-widget-hd h1{
+div#shell div.gallery-overlay div.yui3-widget-hd h1{
     display: inline;
     font-weight: bold;
     font-size: 250%;
@@ -30,12 +30,12 @@ div#shell div.gallery-overlay div.yui-widget-hd h1{
 /*    padding-right: 20px;*/
 }
 
-div.yui-widget-ft div.overlay-close {
+div.yui3-widget-ft div.overlay-close {
     left: 50%;
 }
 
-div.yui-widget-hd div.overlay-close,
-div.yui-widget-ft div.overlay-close  {
+div.yui3-widget-hd div.overlay-close,
+div.yui3-widget-ft div.overlay-close  {
     border: 1px solid grey;
     font-weight: bold;
     padding: 5px;
@@ -44,21 +44,21 @@ div.yui-widget-ft div.overlay-close  {
     text-transform:uppercase;
 }
 
-div#shell div.gallery-overlay div.yui-widget-hd div.overlay-close {
+div#shell div.gallery-overlay div.yui3-widget-hd div.overlay-close {
     display: inline;
     margin-bottom: 10px;
     position:static;
 }
 
-div#shell div.gallery-overlay div.yui-widget-bd {
+div#shell div.gallery-overlay div.yui3-widget-bd {
     overflow:auto;
 }
 
-div#shell div.gallery-overlay div.yui-widget-ft {
+div#shell div.gallery-overlay div.yui3-widget-ft {
     position: relative;
 }
 
-/*div#shell div.gallery-overlay div.yui-widget-ft div.overlay-close {
+/*div#shell div.gallery-overlay div.yui3-widget-ft div.overlay-close {
 
 }
 */
