@@ -15,7 +15,7 @@ div#shell div.gallery-overlay {
     background-color: #fff;
     border: 1px solid grey;
     /* Why !important? we want to override the inline YUI style. 
-     * this allows you to control position, for example. 
+     * this allows you to control position, without having to . 
      * was used for center fix, but leaving here as example if you want to see how.
     */
 /*    top: 100px !important;*/

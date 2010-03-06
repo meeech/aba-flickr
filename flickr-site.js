@@ -7,8 +7,6 @@ YUI().use('node-event-simulate', 'cssreset','cssfonts', 'cssbase', 'node', 'subs
 var abaConfig = YUI.namespace('flickr-site.config');
 var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 
-// @setup default of abaconfig if its not setup. 
-
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').prepend(initgallery(data));
@@ -27,30 +25,32 @@ jsonFlickrFeed = function (data) {
 var initgallery = function(data) {
     var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
     //We can filter based on usename plain english...
-    var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', '');
+    var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', ''),
+        tagIndex = tagName.replace(' ', '-');
 
     //init the bb area for the gallery.
-    bb[tagName] = {};
+    bb[tagIndex] = {};
 
-    var container = Y.Node.create('<div class="tag" id="' + tagName + '"></div>');
+    var container = Y.Node.create('<div class="tag" id="' + tagIndex + '"></div>');
 
     container.append(Y.Node.create('<h2>' + tagName +'</h2>'));
     container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));
 
     //Store data under tag name Make index image
-    bb[tagName]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
-    bb[tagName]['indexImageNode'] = buildGalleryNode(bb[tagName]['indexImage'], {'title': tagName}).addClass('index');
-    bb[tagName]['images'] = data.items;
-    bb[tagName]['container'] = container;
-    container.append(bb[tagName]['indexImageNode']);
+    bb[tagIndex]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
+    bb[tagIndex]['indexImageNode'] = buildGalleryNode(bb[tagIndex]['indexImage'], {'title': tagName}).addClass('index');
+    bb[tagIndex]['images'] = data.items;
+    bb[tagIndex]['container'] = container;
+    container.append(bb[tagIndex]['indexImageNode']);
 
     return container;
 };
 
 //Build all the gallery images. 
-var buildGallery = function(tag) {
-    var imagesDiv = Y.Node.create('<div class="gallery"></div>');
-    Y.each( bb[tag].images , function(item, index) {
+var buildGallery = function(tagName) {
+    var tagIndex = tagName.replace(' ', '-');
+    var imagesDiv = Y.Node.create('<div class="gallery-'+tagIndex+' gallery"></div>');
+    Y.each( bb[tagIndex].images , function(item, index) {
          var node = buildGalleryNode(item, {'class' : 'thumb'} );
          imagesDiv.append(node);
     });
@@ -82,6 +82,7 @@ var buildGalleryOverlay = function(tagName) {
         headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
         bodyContent: buildGallery(tagName),
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
+        id: "overlay-" + tagName.replace(/[ ]+/, '-', 'g'),
         // height: Y.DOM.winHeight()+'px',
         // height: '400px',
         zIndex: 10,
@@ -106,17 +107,19 @@ Y.delegate('click', function(e) {
 
     //Otherwise, do the math...
     var tagName = this.get('title') || this.get('innerHTML'),
-        overlay = bb[tagName]['overlay'] || false,
+        tagIndex = tagName.replace(' ', '-'),
+        overlay = bb[tagIndex]['overlay'] || false,
         currentlyVisible = bb['currentlyVisible'] || false;
 
     if(false === overlay) {
         overlay = buildGalleryOverlay(tagName);
+        console.log(overlay);
         //Specify element specifically, otherwise overlay appears UNDER index thumbs
         overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
         overlay.on('click', function(e) {
             e.halt();
         });
-        bb[tagName]['overlay'] = overlay;
+        bb[tagIndex]['overlay'] = overlay;
     }
 
     if(currentlyVisible) {
@@ -128,8 +131,9 @@ Y.delegate('click', function(e) {
         overlay.show();
         bb["currentlyVisible"] = overlay;        
     }
+e.halt();
     
-    Shadowbox.setup("div#shell div.thumb a", {
+    Shadowbox.setup("div#shell div.gallery-" + tagIndex + " div.thumb a", {
         "gallery": tagName
     });
 }, 'div#shell',  'div.tag>h2,div.tag>h3, div.index a, div.overlay-close');
