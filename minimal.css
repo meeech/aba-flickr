@@ -1,26 +1,36 @@
 /* Everything happens in shell */
 div#shell {
     position:relative;
-/*    border: 1px solid #ccc;*/
 }
 
-/*The Index Thumb you clikck on to see a gallery. Includes the tag name*/
+/*The Index Thumb you click on to see a gallery. 
+    Includes the tag name */
 div#shell div.tag {
-    border: 3px solid brown;
+    border: 3px solid black;
     display:inline-block;
 }
 
-/* The wrapper box for the gallery thumbs */
+/* General: 
+    This lets you hook into the Overlay for the Gallery Thumbs 
+    Each Overlay will have this class.
+*/
 div#shell div.gallery-overlay {
     background-color: #fff;
     border: 1px solid grey;
     /* Why !important? we want to override the inline YUI style. 
-     * this allows you to control position, without having to . 
-     * was used for center fix, but leaving here as example if you want to see how.
+     * this allows you to control position & sizing, without having to modify the JS. 
     */
-/*    top: 100px !important;*/
-/*    width: 99% !important;*/
+    /*top: 50px !important;*/
+    /*left: 50px !important;*/
+    /*width: 500px !important;*/
 }
+
+/*
+    Each div.gallery-overlay also has a unique ID, so you can customize based on tag name
+    eg: overlay-lighthouse for the overlay for the lighthouse tag
+
+*/
+
 
 div#shell div.gallery-overlay div.yui3-widget-hd h1{
     display: inline;
@@ -44,10 +54,12 @@ div.yui3-widget-ft div.overlay-close  {
     top:0;
     text-transform:uppercase;
 }
+
 div.yui3-widget-hd div.overlay-close:hover,
 div.yui3-widget-ft div.overlay-close:hover {
     background-color:#ccc;
 }
+
 div#shell div.gallery-overlay div.yui3-widget-hd div.overlay-close {
     display: inline;
     margin-bottom: 10px;
@@ -62,10 +74,6 @@ div#shell div.gallery-overlay div.yui3-widget-ft {
     position: relative;
 }
 
-/*div#shell div.gallery-overlay div.yui3-widget-ft div.overlay-close {
-
-}
-*/
 /*image item*/
 div#shell div.gallery div.thumb {
     width: 150px;
