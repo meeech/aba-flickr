@@ -34,7 +34,7 @@ var initgallery = function(data) {
     var container = Y.Node.create('<div class="tag" id="' + tagIndex + '"></div>');
 
     container.append(Y.Node.create('<h2>' + tagName +'</h2>'));
-    container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));
+    // container.append(Y.Node.create('<h3>' + data.items.length + '</h3>'));
 
     //Store data under tag name Make index image
     bb[tagIndex]['indexImage'] = data.items.slice(randomIndex,randomIndex+1)[0];
@@ -78,13 +78,13 @@ var buildGalleryNode = function(item, options) {
 };
 
 var buildGalleryOverlay = function(tagName) {
+    var gallery = buildGallery(tagName);
     return new Y.Overlay({
         headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
-        bodyContent: buildGallery(tagName),
+        bodyContent: gallery,
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
         id: "overlay-" + tagName.replace(/ /g, '-'),
-        // height: Y.DOM.winHeight()+'px',
-        // height: '400px',
+        visible: false,
         zIndex: 10,
         centered: true
     });
@@ -113,13 +113,26 @@ Y.delegate('click', function(e) {
 
     if(false === overlay) {
         overlay = buildGalleryOverlay(tagName);
-        // console.log(overlay);
-        //Specify element specifically, otherwise overlay appears UNDER index thumbs
-        overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
+        // overlay.hide();
+        //Specify element specifically
+        //otherwise overlay appears UNDER index thumbs
+        var thumbWidth = overlay.render("#shell")
+            .get('boundingBox')
+            //add a generic class
+            .addClass('gallery-overlay')
+            //Get the thumbwidth
+            .one('div.thumb').getComputedStyle('width').replace('px','');
+        var oWidth = thumbWidth * (abaConfig.galleryThumbsPerRow || 5);
+        overlay.set('width',oWidth);
+
         overlay.on('click', function(e) {
             e.halt();
         });
+        
         bb[tagIndex]['overlay'] = overlay;
+        
+        console.log(overlay.get('boundingBox'));
+
     }
 
     if(currentlyVisible) {
