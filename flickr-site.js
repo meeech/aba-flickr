@@ -13,8 +13,9 @@ var bb = Y.namespace(abaConfig.flickrUserName.concat('.data'));
 jsonFlickrFeed = function (data) {
     if( Y.Lang.isUndefined(data.items)) { return false; }  
     Y.one('#shell').prepend(initgallery(data));
-    
-    // Y.one("div#night.tag>h2").simulate('click');
+
+    //Uncomment and change #id when debugging, so yo dont have to click all the time.
+    // Y.one("div#lighthouse.tag>h2").simulate('click');
     return true;
 };
 

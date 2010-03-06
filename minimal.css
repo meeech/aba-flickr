@@ -14,7 +14,7 @@ div#shell div.tag {
     This lets you hook into the Overlay for the Gallery Thumbs 
     Each Overlay will have this class.
 */
-div#shell div.gallery-overlay {
+div.gallery-overlay {
     background-color: #fff;
     border: 1px solid grey;
     /* Why !important? we want to override the inline YUI style. 
@@ -30,6 +30,14 @@ div#shell div.gallery-overlay {
     eg: overlay-lighthouse for the overlay for the lighthouse tag
 
 */
+div#overlay-lighthouse.gallery-overlay {
+    border: 5px solid black;
+}
+
+div#overlay-lighthouse.gallery-overlay div.yui3-widget-hd {
+color: #ccc;
+background-color: black;    
+}
 
 
 div#shell div.gallery-overlay div.yui3-widget-hd h1{
@@ -71,6 +79,8 @@ div#shell div.gallery-overlay div.yui3-widget-bd {
 }
 
 div#shell div.gallery-overlay div.yui3-widget-ft {
+    margin-top: 5px;
+    min-height: 32px;
     position: relative;
 }
 
