@@ -26,7 +26,7 @@ var initgallery = function(data) {
     var randomIndex = Math.floor(Math.random()*data.items.length); //Can this be a bug? ever be == length?    
     //We can filter based on usename plain english...
     var tagName = data.title.replace('Uploads from ' + abaConfig.flickrUserName + ', tagged ', ''),
-        tagIndex = tagName.replace(' ', '-');
+        tagIndex = tagName.replace(/ /g, '-');
 
     //init the bb area for the gallery.
     bb[tagIndex] = {};
@@ -48,7 +48,7 @@ var initgallery = function(data) {
 
 //Build all the gallery images. 
 var buildGallery = function(tagName) {
-    var tagIndex = tagName.replace(' ', '-');
+    var tagIndex = tagName.replace(/ /g, '-');
     var imagesDiv = Y.Node.create('<div class="gallery-'+tagIndex+' gallery"></div>');
     Y.each( bb[tagIndex].images , function(item, index) {
          var node = buildGalleryNode(item, {'class' : 'thumb'} );
@@ -82,7 +82,7 @@ var buildGalleryOverlay = function(tagName) {
         headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
         bodyContent: buildGallery(tagName),
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
-        id: "overlay-" + tagName.replace(/[ ]+/, '-', 'g'),
+        id: "overlay-" + tagName.replace(/ /g, '-'),
         // height: Y.DOM.winHeight()+'px',
         // height: '400px',
         zIndex: 10,
@@ -107,13 +107,13 @@ Y.delegate('click', function(e) {
 
     //Otherwise, do the math...
     var tagName = this.get('title') || this.get('innerHTML'),
-        tagIndex = tagName.replace(' ', '-'),
+        tagIndex = tagName.replace(/ /g, '-'),
         overlay = bb[tagIndex]['overlay'] || false,
         currentlyVisible = bb['currentlyVisible'] || false;
 
     if(false === overlay) {
         overlay = buildGalleryOverlay(tagName);
-        console.log(overlay);
+        // console.log(overlay);
         //Specify element specifically, otherwise overlay appears UNDER index thumbs
         overlay.render("#shell").get('boundingBox').addClass('gallery-overlay');
         overlay.on('click', function(e) {
@@ -131,8 +131,7 @@ Y.delegate('click', function(e) {
         overlay.show();
         bb["currentlyVisible"] = overlay;        
     }
-e.halt();
-    
+
     Shadowbox.setup("div#shell div.gallery-" + tagIndex + " div.thumb a", {
         "gallery": tagName
     });
