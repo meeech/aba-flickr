@@ -3,6 +3,7 @@
     <head>
         <title></title>
         <script src="http://yui.yahooapis.com/3.1.0pr1/build/yui/yui-min.js"></script>
+        <!-- <link rel="stylesheet" href="aba.css" type="text/css" media="screen" title="no title" charset="utf-8"> -->
         <link rel="stylesheet" href="dev.css" type="text/css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" type="text/css" href="/shadowbox-3.0.2/shadowbox.css">
         <!-- Skin -->
@@ -12,21 +13,21 @@
 </div>
 <script type="text/javascript" charset="utf-8">
     //Set up your configs here. 
-    var abaConfig = YUI.namespace('flickr-site.config');
-    abaConfig.flickrUserName = 'amisoll';
-    abaConfig.flickrUserId = '35130544@N02';    
-    abaConfig.galleryThumbsPerRow = 5;
-    abaConfig.pictureSize = '_b'; //default is normal, _b for big
-    abaConfig.tags = [
-   // 'montreal', 'fireworks','israel',
-    'lighthouse','night'];
+    var myConfig = YUI.namespace('flickr-site.config');
+    myConfig.flickrUserName = 'amisoll';
+    myConfig.flickrUserId = '35130544@N02';    
+    myConfig.tags = [
+    // 'montreal', 'fireworks','israel',
+    'montreal,night','lighthouse'];
+    myConfig.galleryThumbsPerRow = 5;
+    myConfig.pictureSize = '_b'; //default is normal, _b for big
     </script>
     <script src="flickr-site.js" type="text/javascript" charset="utf-8"></script>
     
-<script type="text/javascript" charset="utf-8">
+<!-- <script type="text/javascript" charset="utf-8">
 // YUI().use('dom','node', 'event-resize',  function(Y) { Y.on("domready", function() { // BEGIN Y closure
 // });});    
-</script>
+</script> -->
     
 </body>
 </html>
