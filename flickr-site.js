@@ -1,9 +1,10 @@
+// @require yui3.1.0pr1
 // Init so it has global scope - keeps things simpler.
 var jsonFlickrFeed;
 
 // domready wrapped in use
 YUI().use(
-    'anim',
+    'anim', 'widget-anim',
     'node-event-simulate', 
     'cssreset','cssfonts', 'cssbase',
     'substitute', 'dump', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
@@ -91,54 +92,11 @@ var buildGalleryOverlay = function(tagName) {
         bodyContent: gallery,
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
         id: "overlay-" + tagName.replace(/ /g, '-'),
-        visible: false,
         width: abaConfig.galleryWidth || "80%",
         zIndex: 10,
         centered: true
     });
-
-    //Alternative to: http://developer.yahoo.com/yui/3/examples/overlay/overlay-anim-plugin.html
-    //If you just want simple anim on show/hide
-    overlay.on('visibleChange', function(e, i) {
-        var aConfig = {};
-        var myAnim = new Y.Anim();        
-        if(true === e.newVal) { //show
-            //This is a quick one-two - make visible according to overlay reqs, 
-            //then hide the gallery and fade it in.
-            this._uiSetVisible(true);
-            this.get('boundingBox').setStyle('opacity', 0);
-            
-            aConfig = {
-                node: this.get('boundingBox'),
-                duration: 0.4,
-                easing: Y.Easing.easeOut,
-                from: { opacity: 0 },
-                to: { opacity: 1 }
-            };            
-        } 
-        else { //hide!
-            //Sweet! was just guessing, but can just halt the event to override default hide() behaviour
-            e.halt();
-            aConfig = {
-                node: this.get('boundingBox'),
-                duration: 0.1,
-                from: { opacity: 1 },
-                to: { opacity: 0 }
-            };
-
-            //we need to hide overlay properly, since we called halt()
-            //We can't call hide, or set('visible'), to change the visibility
-            // but if we don't then we can't click on close button of other layers. 
-            //so setting opacity isn't enough.
-            //Can following the example of plugin, we just call the private method. 
-            myAnim.after('end', function() {
-                Y.Widget.getByNode(this.get('node'))._uiSetVisible(false);
-           });    
-        }
-        myAnim.setAttrs(aConfig);
-        myAnim.run();
-    });
-    
+    overlay.plug(Y.Plugin.WidgetAnim);
     return overlay;
 };
 
