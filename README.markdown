@@ -3,7 +3,7 @@ aba-flickr
 
 Simple HTML/CSS/JS.
 
-Mixes YUI and Shadowbox.
+Mixes YUI and Shadowbox ().
 
 Meant for personal Gallery page, while still keeping flickr as backend/main archive.
 

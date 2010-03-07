@@ -3,6 +3,7 @@ var jsonFlickrFeed;
 
 // domready wrapped in use
 YUI().use(
+    'anim',
     'node-event-simulate', 
     'cssreset','cssfonts', 'cssbase',
     'substitute', 'dump', 'overlay', function(Y) { Y.on("domready", function() { // BEGIN Y closure
@@ -82,8 +83,9 @@ var buildGalleryNode = function(item, options) {
 };
 
 var buildGalleryOverlay = function(tagName) {
-    var gallery = buildGallery(tagName);
-    return new Y.Overlay({
+    var gallery = buildGallery(tagName),
+        overlay;
+    overlay = new Y.Overlay({
         headerContent: Y.Node.create("<h1>"+tagName+"</h1><div class='overlay-close'><span>Close</span></div>"),
         bodyContent: gallery,
         footerContent:"<div class='overlay-close'><span>Close</span></a>",
@@ -93,24 +95,69 @@ var buildGalleryOverlay = function(tagName) {
         zIndex: 10,
         centered: true
     });
+    
+    // overlay.on('render', function(e) {
+    // 
+    // });
+    // 
+    overlay.on('visibleChange', function(e, i) {
+        var aConfig = {};
+        
+        if(true === e.newVal) { //show
+            this.get('boundingBox').setStyle('opacity', 0); //avoid the flickr
+            aConfig = {
+                node: this.get('boundingBox'),
+                duration: 0.5,
+                from: { opacity: 0 },
+                to: { opacity: 1 }
+            };
+        } else { //hide!
+            //Sweet! was just guessing, but can halt the event to override default hide() behaviour
+            e.halt();
+            aConfig = {
+                node: this.get('boundingBox'),
+                duration: 0.5,
+                from: { opacity: 1 },
+                to: { opacity: 0 }
+            };            
+        }
+        
+        var myAnim = new Y.Anim(aConfig);
+        myAnim.run();
+    });
+    
+    // overlay.after('render', function() {
+    //     this.get('boundingBox').setStyle('opacity', 0);
+    //     var myAnim = new Y.Anim({
+    //         node: this.get('boundingBox'),
+    //         duration: 1,
+    //         from: {
+    //             opacity: 0
+    //         },
+    //         to: {
+    //             opacity: 1
+    //         }
+    //     });
+    //     
+    //     myAnim.run();
+    // });
+    
+    return overlay;
 };
 
-//Show hide the gallery thumbs...
-//show the stack when cover image is clicked. 
-//remove hide class from the stack,
-//hide index
+Y.one('div#shell').delegate('click', function(e) {
+    e.halt();
+    //Handle Close Buttons in the hd and ft of the widget. They could really be anywhere in the widget, fyi.
+    Y.Widget.getByNode(Y.one(this)).hide();
+    bb['currentlyVisible'] = false;
+}, 'div.overlay-close');
+
+//show/hide the overlay when index image is clicked. 
+//If overlay doesn't exist, builds it first.
 Y.one('div#shell').delegate('click', function(e) {
     e.halt();
 
-    //Handle Close Buttons in the hd and ft of the widget
-    //They could really be anywhere in the widget, fyi.
-    if(e.currentTarget.hasClass('overlay-close')){
-        Y.Widget.getByNode(Y.one(this)).hide();
-        bb['currentlyVisible'] = false;
-        return;
-    }
-
-    //Otherwise, do the math...
+    //do the math...
     var tagName = this.get('title') || this.get('innerHTML'),
         tagIndex = tagName.replace(/ /g, '-'),
         overlay = bb[tagIndex]['overlay'] || false,
@@ -118,9 +165,7 @@ Y.one('div#shell').delegate('click', function(e) {
 
     if(false === overlay) {
         overlay = buildGalleryOverlay(tagName);
-        // overlay.hide();
-        //Specify element specifically
-        //otherwise overlay appears UNDER index thumbs
+        //Specify element specifically otherwise overlay appears UNDER index thumbs
         var thumbWidth = overlay.render("#shell")
             .get('boundingBox')
             //add a generic class
@@ -133,10 +178,9 @@ Y.one('div#shell').delegate('click', function(e) {
         //but we can auto calculate it since we can get styles post render
         // var oWidth = thumbWidth * (abaConfig.galleryThumbsPerRow || 5);
         // overlay.set('width',oWidth);
-
-        overlay.on('click', function(e) {
-            e.halt();
-        });
+        
+        //We're using Shadowbox to display images. 
+        overlay.on('click', function(e) { e.halt();});
         bb[tagIndex]['overlay'] = overlay;
     }
 
@@ -153,7 +197,7 @@ Y.one('div#shell').delegate('click', function(e) {
     Shadowbox.setup("div#shell div.gallery-" + tagIndex + " div.thumb a", {
         "gallery": tagName
     });
-},'div.tag>h2,div.tag>h3, div.index a, div.overlay-close');
+},'div.tag>h2, div.index a');
 
 var defaultArgs = ['id='+abaConfig.flickrUserId,'lang=en-us','format=json'];
 var baseFlickrUrl = 'http://api.flickr.com/services/feeds/photos_public.gne?' + defaultArgs.join('&');
