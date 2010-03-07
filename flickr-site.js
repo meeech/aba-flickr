@@ -112,31 +112,29 @@ var buildGalleryOverlay = function(tagName) {
                 to: { opacity: 1 }
             };
             
-        } else { //hide!
+        } 
+        //else { //hide!
             //Sweet! was just guessing, but can halt the event to override default hide() behaviour
-            e.halt();
-            aConfig = {
-                node: this.get('boundingBox'),
-                duration: 0.1,
-                from: { opacity: 1 },
-                to: { opacity: 0 }
-            };
+            // e.halt();
+            // aConfig = {
+            //     node: this.get('boundingBox'),
+            //     duration: 0.1,
+            //     from: { opacity: 1 },
+            //     to: { opacity: 0 }
+            // };
             
             //On end, we need to hide it properly, since we stop it before.
             //We can't call hide, or set('visible') to change the visibility, 
             // but if we don't then we can't click on close button of other layers. so setting opacity isn't enough.
-            myAnim.on('end', function() {
-                console.log('end');
-                var overlay = Y.Widget.getByNode(this.get('node'));
-                overlay.get('boundingBox').addClass(overlay.getClassName('hidden'));
-        // this.get(BOUNDING_BOX).toggleClass(this.getClassName(HIDDEN), !val);
-        // console.log(this.get('node').getClassName('hidden'));
-                // this.get('node').addClass('hidden');
-                // console.log();
-
-            });
-            
-        }
+            // myAnim.on('end', function() {
+            //     console.log('end');
+            //     var overlay = Y.Widget.getByNode(this.get('node'));
+            //     overlay.get('boundingBox').addClass(overlay.getClassName('hidden'));
+            // this.get(BOUNDING_BOX).toggleClass(this.getClassName(HIDDEN), !val);
+            // console.log(this.get('node').getClassName('hidden'));
+            // this.get('node').addClass('hidden');
+//            });    
+        //}
         myAnim.setAttrs(aConfig);
         myAnim.run();
     });
