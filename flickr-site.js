@@ -95,11 +95,7 @@ var buildGalleryOverlay = function(tagName) {
         zIndex: 10,
         centered: true
     });
-    
-    // overlay.on('render', function(e) {
-    // 
-    // });
-    // 
+
     overlay.on('visibleChange', function(e, i) {
         var aConfig = {};
         var myAnim = new Y.Anim();        
@@ -107,7 +103,8 @@ var buildGalleryOverlay = function(tagName) {
             this.get('boundingBox').setStyle('opacity', 0); //avoid the flickr
             aConfig = {
                 node: this.get('boundingBox'),
-                duration: 0.5,
+                duration: 0.4,
+                easing: Y.Easing.backIn,
                 from: { opacity: 0 },
                 to: { opacity: 1 }
             };

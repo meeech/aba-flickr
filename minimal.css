@@ -98,6 +98,7 @@ div#shell div.gallery div.thumb {
 /*Gallery Index Thumbnails*/
 /*gallery title*/
 div#shell div h2{
+    cursor: pointer;
     background-color: white;
     border: 1px solid yellow;
     position: absolute;
