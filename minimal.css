@@ -140,6 +140,10 @@ div.index img {
     position: relative;
 }
 
+div.tag.active div.index img {
+    opacity: 0.5;
+}
+
 div#shell div.index span, /*We want to hide the picture title when its the gallery thumb*/
 .hide {
     visibility: hidden !important;

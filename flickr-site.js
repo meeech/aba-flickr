@@ -103,6 +103,7 @@ var buildGalleryOverlay = function(tagName) {
 Y.one('div#shell').delegate('click', function(e) {
     e.halt();
     //Handle Close Buttons in the hd and ft of the widget. They could really be anywhere in the widget, fyi.
+    e.container.all('div.tag.active').removeClass('active');
     Y.Widget.getByNode(Y.one(this)).hide();
     bb['currentlyVisible'] = false;
 }, 'div.overlay-close');
@@ -141,11 +142,13 @@ Y.one('div#shell').delegate('click', function(e) {
 
     if(currentlyVisible) {
         currentlyVisible.hide();
+        e.container.all('div.tag.active').removeClass('active');
         bb['currentlyVisible'] = false;
     }
     //Don't show one we just hid
     if(overlay != currentlyVisible) {
         overlay.show();
+        e.container.one('div#'+tagIndex+'.tag').addClass('active');
         bb["currentlyVisible"] = overlay;        
     }
 
